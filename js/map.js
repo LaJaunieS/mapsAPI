@@ -412,6 +412,7 @@ function removeMarkerInfo() {
 
 function centerOnResult() {
     map.setCenter(this.location);
+    map.setZoom(16);
 }
 
 function assignMapListeners() {
@@ -433,6 +434,7 @@ function startSearch() {
         createMap(seattle);
     } else {
         map.setCenter(map.getCenter().toJSON());
+        map.setZoom(12);
     };
     callService();
 }
