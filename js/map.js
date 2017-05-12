@@ -17,7 +17,10 @@ var centerBtn = document.createElement('button');
     controlDiv.appendChild(centerBtn);
 
 //map variables
+//for setting map controls
 var containerIs500 = mapContainer.clientWidth <= 500;    
+//for responsive viewport
+var windowIs760 = container.clientWidth >= 760;
 var seattle = { lat: 47.6062, lng: -122.3321 };
 
 var map= {};
@@ -519,7 +522,12 @@ function searchCallback(results, status) {
             });
         
             resultsList.scrollTop = 0;
-            resultsList.style.height = "400px";
+            resultsList.style.visibility = "visible";
+            if (windowIs760) {
+                resultsList.style.height = "90vh";
+            } else {
+                resultsList.style.height = "400px";
+            };
             resultsList.appendChild(ul);
         } else {
             console.log('connection error');
