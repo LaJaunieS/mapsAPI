@@ -17,9 +17,8 @@ var centerBtn = document.createElement('button');
     controlDiv.appendChild(centerBtn);
 
 //map variables
-//for setting map controls
-var containerIs500 = mapContainer.clientWidth <= 500;    
-//for responsive viewport
+  
+//breakpoint in css
 var windowIs760 = container.clientWidth >= 760;
 var seattle = { lat: 47.6062, lng: -122.3321 };
 
@@ -39,8 +38,8 @@ function createMap(ctr) {
     mapTypeId: 'roadmap',
     heading: 0,
     //prevents one-finger scrolling on map on a mobile device
-    gestureHandling: 'cooperative',
-    zoomControl: true,
+    gestureHandling: 'greedy',
+    zoomControl: false,
     mapTypeControl: false,
     streetViewControl: false,
     rotateControl: false,
@@ -211,6 +210,11 @@ function createMap(ctr) {
     heading: 0,
     //prevents one-finger scrolling on map on a mobile device
     gestureHandling: 'cooperative',
+    zoomControl: true,
+    mapTypeControl: true,
+    streetViewControl: true,
+    rotateControl: true,
+    fullscreenControl: true,
     //ui positioning property
     streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM  },
     //styling for map
@@ -369,9 +373,12 @@ function createMap(ctr) {
       }
     ]
 }; 
+    //for setting map controls
+    var containerIs500 = mapContainer.clientWidth > 500;  
+    
     mapEl.style.display = "block";
-
-    if (!containerIs500) {
+    
+    if (containerIs500) {
         map = new google.maps.Map(mapEl, mapOptions);
         map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
         controlDiv.style.marginBottom = "25px";
@@ -387,7 +394,6 @@ function createMap(ctr) {
 
 //listener functions
 function setCenter() {
-    //add listener later that changes when map moves- see above for using center_changed event
     map.setCenter(seattle);
     map.setZoom(15);
     !function() {
@@ -412,7 +418,7 @@ function removeMarkerInfo() {
 
 function centerOnResult() {
     map.setCenter(this.location);
-    map.setZoom(16);
+    map.setZoom(15);
 }
 
 function assignMapListeners() {
