@@ -1,5 +1,6 @@
 //console.log("search js");
 
+
 !function() {
 	var visibleOption = document.getElementById('visible-option');
 	var nonVisibleOptions = document.getElementById('nonvisible-options');
@@ -30,5 +31,6 @@
 		var element = nonVisibleLiItems[i];
 		element.onclick = selectOption;	
 	};
+
 
 }()

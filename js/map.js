@@ -1,5 +1,6 @@
 !function initialize() {
-  //console.log('test');
+
+    //console.log('test');
   //existing DOM elements
   var headerDiv = document.getElementById('headerContainer');
   var mapContainer = document.getElementById('mapContainer');
@@ -24,10 +25,7 @@
 
   var map= {};
   var markers = [];
-
-
   //map create only after click event on search button
-
   function createMap(ctr) {
       mapContainer.style.display = "block";
       var mapOptionsSmall = {
@@ -533,17 +531,16 @@
       } else {
           console.log('connection error');
       };
-  };
-
-  //separate listener - needs to be assigned before map element created
-  searchBtn.onclick = startSearch;
+  }
 
 
 
      //API Key - AIzaSyD-ysCChphJtFjAWNY0ge7kwE7YGlPFEXw
       //!!remember to restrict api key in api console access to specific domain before putting in production
       //also when finished building remember to wrap everything in an initialize function that will call with the window.onload event handler
-
+      searchBtn.onclick = startSearch;
+  
+  
 
 }()
 
