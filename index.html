@@ -19,13 +19,16 @@
             
             <div id="searchBar">
                 <div id="searchInput">
-                    <select name="options">
-                        <option value='{ "name": "donuts", "type": "bakery" }'>Show me Donuts!</option>
-                        <option value='{ "name": "beer", "type": "bar" }'>Show me Beer!</option>
-                        <option value='{ "name": "burgers", "type": "restaurant" }'>Show me Burgers!</option>
-                        <option value='{ "name": "coffee", "type": "cafe" }'>Show me Coffee!</option>
-                        <option value='{ "name": "books", "type": "book_store" }'>Show me Books!</option>
-                    </select>
+                    <ul id="visible-option">
+                        <li data-searchParams='{ "name": "donuts", "type": "bakery" }'>Show me Donuts!</li>
+                    </ul>
+                    <ul id="nonvisible-options">
+                        <li data-searchParams='{ "name": "beer", "type": "bar" }'>Show me Beer!</li>
+                        <li data-searchParams='{ "name": "burgers", "type": "restaurant" }'>Show me Burgers!</li>
+                        <li data-searchParams='{ "name": "coffee", "type": "cafe" }'>Show me Coffee!</li>
+                        <li data-searchParams='{ "name": "books", "type": "book_store" }'>Show me Books!</li>
+                    </ul>
+                    
                 </div>
                     <button id="searchBtn" name="searchBtn">Search</button>
             </div>
@@ -42,6 +45,7 @@
             
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ysCChphJtFjAWNY0ge7kwE7YGlPFEXw&libraries=places"></script>
         <script src="js/map.js"></script>
+        <script src="js/search.js"></script>
         
 		
 	</body>
