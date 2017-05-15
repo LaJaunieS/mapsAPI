@@ -131,6 +131,7 @@ ul p {
     background-color: #f7f7f7; 
     box-shadow: none;
     color: #666;
+    cursor: pointer;
     padding: 0;
     margin: 0;
     height: 100%;
