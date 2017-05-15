@@ -14,25 +14,27 @@
         <div id="container">
             
             <div id="headerContainer">
-                <h1>Show Me...</h1>
+                <!-- TBD -->
             </div>
             
-            <div id="searchBar">
-                <div id="searchInput">
-                    <ul id="visible-option">
-                        <li data-searchParams='{ "name": "donuts", "type": "bakery" }'>Show me Donuts!</li>
-                    </ul>
-                    <ul id="nonvisible-options">
-                        <li data-searchParams='{ "name": "beer", "type": "bar" }'>Show me Beer!</li>
-                        <li data-searchParams='{ "name": "burgers", "type": "restaurant" }'>Show me Burgers!</li>
-                        <li data-searchParams='{ "name": "coffee", "type": "cafe" }'>Show me Coffee!</li>
-                        <li data-searchParams='{ "name": "books", "type": "book_store" }'>Show me Books!</li>
-                    </ul>
-                    
+            <div id="searchContainer">
+                <div id="searchBar">
+                    <div id="searchInput">
+                        <ul id="visible-option">
+                            <li data-searchParams='{ "name": "donuts", "type": "bakery" }'>Show me Donuts!</li>
+                        </ul>
+                        <ul id="nonvisible-options">
+                            <li data-searchParams='{ "name": "beer", "type": "bar" }'>Show me Beer!</li>
+                            <li data-searchParams='{ "name": "burgers", "type": "restaurant" }'>Show me Burgers!</li>
+                            <li data-searchParams='{ "name": "coffee", "type": "cafe" }'>Show me Coffee!</li>
+                            <li data-searchParams='{ "name": "books", "type": "book_store" }'>Show me Books!</li>
+                        </ul>
+                        
+                    </div>
+                        <button id="searchBtn" name="searchBtn">Search</button>
                 </div>
-                    <button id="searchBtn" name="searchBtn">Search</button>
-            </div>
-            
+           </div>
+
             <div id="mapContainer">
                 <div id="map"></div>
             </div>

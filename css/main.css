@@ -43,10 +43,16 @@ ul p {
     margin: 0;
 }
 
+#searchContainer {
+    width: 100%;
+}
+
 #searchBar {
     display: flex;
     flex-flow: row;
     font-size: 25px;
+    margin: 0 auto;
+    max-width: 900px;
     width: 100%;
     height: 55px; 
 }
@@ -87,7 +93,7 @@ ul p {
 
 
 
-#searchBar li:hover {
+#searchBar #nonvisible-options li:hover {
     background-color: #666;
     color: #f7f7f7;
 }
@@ -97,6 +103,10 @@ ul p {
     z-index: 100;
 }
 
+#visible-option li {
+    background: url("../img/chevron-down.png") no-repeat right/5%;
+    }
+
 #nonvisible-options {
     display: none;
     position: absolute;
@@ -105,7 +115,6 @@ ul p {
 }
 
 #searchInput {
-    background: url("../img/chevron-down.png") no-repeat right/5%;
     position: relative;
     width: 70%;
    }
