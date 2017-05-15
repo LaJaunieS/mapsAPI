@@ -10,10 +10,10 @@
 	function showOptions() {
 		if (!visible) {
 			visibleOption.children[0].innerHTML = "Show me Donuts!"
-			nonVisibleOptions.style.display = "block";
+			nonVisibleOptions.style.visibility = "visible";
 			visible = true;
 		} else {
-			nonVisibleOptions.style.display = "none";
+			nonVisibleOptions.style.visibility = "hidden";
 			visible = false;
 		}
 	}
