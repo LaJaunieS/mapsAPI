@@ -1,7 +1,7 @@
 //console.log("search js");
 
+!function searchControls() {
 
-!function() {
 	var visibleOption = document.getElementById('visible-option');
 	var nonVisibleOptions = document.getElementById('nonvisible-options');
 	var nonVisibleLiItems = nonVisibleOptions.children;	
@@ -21,7 +21,7 @@
 	function selectOption() {
 		visibleOption.children[0].innerHTML = this.innerHTML;
 		visibleOption.children[0].dataset.searchparams = this.dataset.searchparams;
-		nonVisibleOptions.style.display = "none";
+		nonVisibleOptions.style.visibility = "hidden";
 		visible = false;
 	}
 
@@ -32,5 +32,7 @@
 		element.onclick = selectOption;	
 	};
 
-
 }()
+
+
+
