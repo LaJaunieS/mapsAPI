@@ -122,6 +122,19 @@
 
   }
 
+  function assignPlaceDetailsListeners() {
+      var expand = document.querySelectorAll('.expand');
+      //console.log(expand);
+      for(var aa = 0; aa < expand.length; aa++) {
+          expand[aa].addEventListener('click', function(){
+            var id = this.parentNode.id;
+            searchPlaces(id);
+            //console.log(id);
+          });
+      };
+  //console.log(expand);
+  }
+
   function startSearch() {
       headerDiv.style.display = "none";
       
@@ -193,8 +206,7 @@
       };
       
       var ul = document.createElement('ul');
-      var expand;
-      
+                                                                                                                                                                                                                                                                                                  
       //clear earlier markers if any, add new markers, add list results to dom
       if (status == google.maps.places.PlacesServiceStatus.OK) {
           markers.forEach(function(marker){
@@ -203,7 +215,7 @@
           
           resultsList.innerHTML = "";                
           markers = [];
-          console.log(results);
+          //console.log(results);
           results.forEach(function(item){
               //improves relevance of search results
               //create markers and add listeners from each item in results array
@@ -239,20 +251,8 @@
               resultsList.style.height = "400px";
           };
           resultsList.appendChild(ul);
-          
-
-          expand = document.querySelectorAll('.expand');
-          //console.log(expand);
-          for(var aa = 0; aa < expand.length; aa++) {
-              expand[aa].addEventListener('click', function(){
-                var id = this.parentNode.id;
-                searchPlaces(id);
-                //console.log(id);
-              });
-
-          };
-          //console.log(expand);
-
+          assignPlaceDetailsListeners();
+                   
       } else {
           console.log('connection error');
       };
