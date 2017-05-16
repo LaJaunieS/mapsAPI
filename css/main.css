@@ -1,3 +1,14 @@
+@keyframes selection {
+  50% {
+    background-color: #666;
+    color: #f7f7f7; 
+    }
+  100% {
+    background-color: #333;
+    color: #f7f7f7; 
+    } 
+}
+
 body {
     height: 100vh;
     width: 100%;
@@ -105,7 +116,7 @@ ul p {
 
 #visible-option li {
     background: url("../img/chevron-down.png") no-repeat right/5%;
-    }
+}
 
 #nonvisible-options {
     visibility: hidden;
