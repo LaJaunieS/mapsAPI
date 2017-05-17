@@ -2,6 +2,10 @@
         font-size: 20px;
     }
 
+.expand p {
+	text-decoration: underline;
+}
+
 .expand ul,
 #placeInfo ul {
 	padding-left: 0;

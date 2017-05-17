@@ -9,6 +9,7 @@ function initialize() {
       mapEl = document.getElementById('map'),    
       searchBtn = document.getElementById('searchBtn'),
       resultsList = document.getElementById('resultsList'),
+      targetPlaceDiv,
       searchParam;
 
   //set custom controls
@@ -19,11 +20,11 @@ function initialize() {
       centerBtn.innerHTML = "Centered";
       controlDiv.appendChild(centerBtn);
 
+
   //map variables
   var map= {},
       markers = [],
-      resultsObj = {},
-      placeInfoHTML = "";
+      resultsObj = {};
     
   //breakpoint in css, other map conditions
   var windowIs760 = container.clientWidth >= 760,
@@ -154,11 +155,19 @@ function initialize() {
 
         //build search request based on li element id and send to call
         searchPlaces: function(id) {
-          //if info template already loaded, just clear the template; otherwise run another search
                 var request = {
                   placeId: id
                 };
                 var service = new google.maps.places.PlacesService(map);
+          //clear any existing expanded info templates before starting new search
+                targetPlaceDiv = document.querySelectorAll('.placeInfo');
+
+                
+                for(var i = 0; i < targetPlaceDiv.length; i++) {
+                   targetPlaceDiv[i].innerHTML = "";
+                };
+
+
                 //console.log(request.placeId);
                 service.getDetails(request,returnObj.placesCallback);
           },
@@ -174,9 +183,8 @@ function initialize() {
 
         buildExpandElement: function(place) {
           var targetLi  = document.getElementById(place.place_id)
-          var targetPlaceDiv = targetLi.querySelector('.placeInfo');
-          console.log(targetPlaceDiv);
-          
+          targetPlaceDiv = targetLi.querySelector('.placeInfo');
+                   
           if (place.hasOwnProperty('place_id')) {
             var placeLi = place.place_id;
           } else {
@@ -185,10 +193,10 @@ function initialize() {
           //need to close placeDiv when more button clicked again
           //need to clear out open placeDivs when another li element clicked 
           
-           placeInfoHTML = '<ul><li>' + place.formatted_address + '</li><li><button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button></li> <li id="open-or-closed">Open Now</li> <li id="open-hours">Hours <img src="img/chevron-down.png">    <div><ul> <li>' + place.opening_hours.weekday_text[0] + '</li> <li>' + place.opening_hours.weekday_text[1]+ '</li> <li>' + place.opening_hours.weekday_text[2] + '</li> <li>' + place.opening_hours.weekday_text[3] + '</li> </ul> </div> </li> </ul>';
+          var placeInfoHTML = '<ul><li>' + place.formatted_address + '</li><li><button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button></li> <li id="open-or-closed">Open Now</li> <li id="open-hours">Hours <img src="img/chevron-down.png">    <div><ul> <li>' + place.opening_hours.weekday_text[0] + '</li> <li>' + place.opening_hours.weekday_text[1]+ '</li> <li>' + place.opening_hours.weekday_text[2] + '</li> <li>' + place.opening_hours.weekday_text[3] + '</li> </ul> </div> </li> </ul>';
            
           targetPlaceDiv.innerHTML = placeInfoHTML;
-          document.getElementById(place.place_id).querySelector('p').style.display = "none";
+          //document.getElementById(place.place_id).querySelector('p').style.display = "none";
               
 
               //document.getElementById(place).children[1].style.display = "initial";
