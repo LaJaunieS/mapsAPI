@@ -204,13 +204,18 @@ ul p {
     overflow-y: scroll;
 }
 
+ #resultsList p {
+        font-size: 20px;
+    }
+
 @media screen and (min-width: 760px) {
     #resultsList {
         width: 33%;
     }
 }
 
-#resultsList li {
+#resultsList > ul > li {
+    border-bottom: 1px solid #d6d6d6;
     cursor: pointer;
 }
 

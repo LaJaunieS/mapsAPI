@@ -21,11 +21,15 @@ function initialize() {
 
   //map variables
   var map= {},
-      markers = [];  
+      markers = [],
+      resultsObj = {},
+      placeInfoHTML = "";
     
-  //breakpoint in css
+  //breakpoint in css, other map conditions
   var windowIs760 = container.clientWidth >= 760,
-      seattle = { lat: 47.6062, lng: -122.3321 };
+      seattle = { lat: 47.6062, lng: -122.3321 },
+      placeInfoPopulated = false;
+
 
   //map create only after click event on search button
 
@@ -127,23 +131,72 @@ function initialize() {
 
         },
 
+        getMapObj: function() {
+          console.log(map);
+        },
+
+        getResultsObj: function() {
+          console.log(resultsObj);
+        },
+
+        //expand places info tab
         assignPlaceDetailsListeners: function() {
             var expand = document.querySelectorAll('.expand');
             //console.log(expand);
             for(var aa = 0; aa < expand.length; aa++) {
                 expand[aa].addEventListener('click', function(){
                   var id = this.parentNode.id;
-                  returnObj.searchPlaces(id);
-                  //console.log(id);
-                });
+                      returnObj.searchPlaces(id);
+                  });
             };
         //console.log(expand);
         },
 
-        getMapObj() {
-          console.log(map);
+        //build search request based on li element id and send to call
+        searchPlaces: function(id) {
+          //if info template already loaded, just clear the template; otherwise run another search
+                var request = {
+                  placeId: id
+                };
+                var service = new google.maps.places.PlacesService(map);
+                //console.log(request.placeId);
+                service.getDetails(request,returnObj.placesCallback);
+          },
+
+        placesCallback: function(place, status) {
+          if (status == google.maps.places.PlacesServiceStatus.OK) {
+            returnObj.buildExpandElement(place);
+            //console.log(place);
+            } else {
+              console.log(status);
+            }
         },
 
+        buildExpandElement: function(place) {
+          var targetLi  = document.getElementById(place.place_id)
+          var targetPlaceDiv = targetLi.querySelector('.placeInfo');
+          console.log(targetPlaceDiv);
+          
+          if (place.hasOwnProperty('place_id')) {
+            var placeLi = place.place_id;
+          } else {
+            var placeLi = place;
+          };
+          //need to close placeDiv when more button clicked again
+          //need to clear out open placeDivs when another li element clicked 
+          
+           placeInfoHTML = '<ul><li>' + place.formatted_address + '</li><li><button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button></li> <li id="open-or-closed">Open Now</li> <li id="open-hours">Hours <img src="img/chevron-down.png">    <div><ul> <li>' + place.opening_hours.weekday_text[0] + '</li> <li>' + place.opening_hours.weekday_text[1]+ '</li> <li>' + place.opening_hours.weekday_text[2] + '</li> <li>' + place.opening_hours.weekday_text[3] + '</li> </ul> </div> </li> </ul>';
+           
+          targetPlaceDiv.innerHTML = placeInfoHTML;
+          document.getElementById(place.place_id).querySelector('p').style.display = "none";
+              
+
+              //document.getElementById(place).children[1].style.display = "initial";
+          
+
+        },
+
+        //map search functions
         startSearch: function() {
 
             headerDiv.style.display = "none";
@@ -155,7 +208,7 @@ function initialize() {
               console.log('existing map object');
                 map.setCenter(map.getCenter().toJSON());
                 map.setZoom(15);
-                returnObj.getMapObj();
+                //returnObj.getMapObj();
             };
             returnObj.callService();
         },
@@ -172,33 +225,6 @@ function initialize() {
                 };           
 
             service.nearbySearch(request, this.searchCallback);
-        },
-
-
-        searchPlaces: function(id) {
-            var request = {
-              placeId: id
-            };
-            var service = new google.maps.places.PlacesService(map);
-            console.log(request.placeId);
-            service.getDetails(request,returnObj.placesCallback);
-        },
-
-        placesCallback: function(place, status) {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-            console.log(place);
-            } else {
-              console.log(status);
-            }
-        },
-
-        buildExpandElement: function() {
-          var placesEl = document.createElement('ul');
-          var placesPh =  document.createElement('li');  //phone
-          var placesWS = document.createElement('li');  //website
-          var placesOpen = document.createElement('li');  //open now?
-          var placesHours = document.createElement('li');  //hours
-
         },
 
         searchCallback: function(results, status) {
@@ -228,7 +254,7 @@ function initialize() {
             };
             
             var ul = document.createElement('ul');
-                                                                                                                                                                                                                                                                                                        
+            resultsObj = results;                                                                                                                                                                                                                                                                                            
             //clear earlier markers if any, add new markers, add list results to dom
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 markers.forEach(function(marker){
@@ -253,7 +279,7 @@ function initialize() {
                     markers.push(marker);
                         
                     var li = document.createElement('li');
-                    li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><p class='expand'>More</p>";
+                    li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><div class='expand'><p>More</p></div><div class='placeInfo'></div>";
                     li.id = item.place_id;
                     li.location = item.geometry.location;
                     
@@ -273,6 +299,7 @@ function initialize() {
                     resultsList.style.height = "400px";
                 };
                 resultsList.appendChild(ul);
+                placeInfoPopulated = false;
                 returnObj.assignPlaceDetailsListeners();
                          
             } else {

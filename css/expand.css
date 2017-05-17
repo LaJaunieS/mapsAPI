@@ -1,0 +1,46 @@
+#placeInfo li{
+        font-size: 20px;
+    }
+
+.expand ul,
+#placeInfo ul {
+	padding-left: 0;
+}
+
+
+.btn-contact {
+	border: none;
+	color: #f7f7f7;
+	height: 35px;
+	padding: 0;
+	margin: 16px 0;
+	width: 120px;
+	}
+
+.btn-contact:first-child {
+	margin-right: 15px;
+}
+
+.btn-website {
+	background-color: rgba(35,134,155,1.0);
+}
+
+.btn-phone {
+	background-color: rgba(14,21,75,1.0);
+}
+
+
+
+#open-or-closed {
+   color: #3b8ede;
+   margin: 0 0 16px;
+ }
+
+#open-hours ul li {
+ 	font-size: 16px;
+}
+
+#open-hours img {
+	height: 14px;
+	width: 20px;
+}

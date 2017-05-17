@@ -1,0 +1,71 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>  
+    <head>
+          
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Show Me Donuts!</title>
+    <!-- <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet"> --> 
+    <link href="css/main.css" rel="stylesheet">
+    <link href="css/expand.css" rel="stylesheet">
+    <style>
+    #resultsList {
+        visibility: visible;
+    }
+
+   
+    </style>
+        
+	</head>
+	<body>
+        <div id="container">
+            
+           
+           
+            
+            <div id="resultsList">
+                <ul>
+                    <li>
+                        <h2>Top Pot Doughnuts</h2>
+                        <p>'325 West Galer Street, Seattle'</p>
+                        <div id="expand">
+                            <div class="placeInfo">
+                                <ul>
+                                    <li>' + place.formatted_address' + </li>
+                                    <li>
+                                        <button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button>
+                                    </li>
+                                    <li id="open-or-closed">Open Now</li>
+                                    <li class="open-hours">Hours <img src="img/chevron-down.png">
+                                        <div>
+                                            <ul>
+                                                <li>place.opening_hours.weekday_text[0]</li>
+                                                <li>place.opening_hours.weekday_text[1]</li>
+                                                <li>place.opening_hours.weekday_text[2]</li>
+                                                <li>place.opening_hours.weekday_text</li>
+                                            </ul>
+                                        </div>
+
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+           
+
+            
+        </div>
+            
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ysCChphJtFjAWNY0ge7kwE7YGlPFEXw&libraries=places"></script>
+        <!-- <script src="js/mapStyles.js"></script>
+        <script src="js/map.js"></script>
+        <script src="js/search.js"></script>
+        <script src="js/main.js"></script>
+                 -->
+		
+	</body>
+</html>
