@@ -4,9 +4,9 @@ function initialize() {
 
     //console.log('test');
   //existing DOM elements
-  var headerDiv = document.getElementById('headerContainer'),
-      mapContainer = document.getElementById('mapContainer'),
-      mapEl = document.getElementById('map'),    
+  var 
+      //vvstays//
+      
       searchBtn = document.getElementById('searchBtn'),
       resultsList = document.getElementById('resultsList'),
       targetPlaceDiv,
@@ -24,7 +24,8 @@ function initialize() {
   //map variables
   var map= {},
       markers = [],
-      resultsObj = {};
+      resultsObj = {},
+      placeObj = {};
     
   //breakpoint in css, other map conditions
   var windowIs760 = container.clientWidth >= 760,
@@ -35,72 +36,78 @@ function initialize() {
   //map create only after click event on search button
 
   var returnObj = {
-      createMap: function (ctr) {
-          mapContainer.style.display = "block";
-          var mapOptionsSmall = {
-              //options for smaller viewport= removes ui controls except for zoom
-              center: ctr,
-              zoom: 12,
-              mapTypeId: 'roadmap',
-              heading: 0,
-              //prevents one-finger scrolling on map on a mobile device
-              gestureHandling: 'greedy',
-              zoomControl: false,
-              mapTypeControl: false,
-              streetViewControl: false,
-              rotateControl: false,
-              fullscreenControl: false,
-              //styling for map
-              styles: mapStyles
-          }; 
-          var mapOptions = {
-              center: ctr,
-              zoom: 15,
-              mapTypeId: 'roadmap',
-              tilt: 45,
-              heading: 0,
-              //prevents one-finger scrolling on map on a mobile device
-              gestureHandling: 'cooperative',
-              zoomControl: true,
-              mapTypeControl: true,
-              streetViewControl: true,
-              rotateControl: true,
-              fullscreenControl: true,
-              //ui positioning property
-              streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM  },
-              //styling for map
-              styles: mapStyles
-          }; 
-      //for setting map controls
-          var containerIs500 = mapContainer.clientWidth > 500;  
+   //    createMap: function (ctr) {
+   //    	var mapEl = document.getElementById('map');
+   //    	var mapContainer = document.getElementById('mapContainer');
+   //      var mapOptionsSmall = {
+   //            //options for smaller viewport= removes ui controls except for zoom
+   //            center: ctr,
+   //            zoom: 12,
+   //            mapTypeId: 'roadmap',
+   //            heading: 0,
+   //            //prevents one-finger scrolling on map on a mobile device
+   //            gestureHandling: 'greedy',
+   //            zoomControl: false,
+   //            mapTypeControl: false,
+   //            streetViewControl: false,
+   //            rotateControl: false,
+   //            fullscreenControl: false,
+   //            //styling for map
+   //            styles: mapStyles
+   //        }; 
+   //      var mapOptions = {
+   //            center: ctr,
+   //            zoom: 15,
+   //            mapTypeId: 'roadmap',
+   //            tilt: 45,
+   //            heading: 0,
+   //            //prevents one-finger scrolling on map on a mobile device
+   //            gestureHandling: 'cooperative',
+   //            zoomControl: true,
+   //            mapTypeControl: true,
+   //            streetViewControl: true,
+   //            rotateControl: true,
+   //            fullscreenControl: true,
+   //            //ui positioning property
+   //            streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM  },
+   //            //styling for map
+   //            styles: mapStyles
+   //        }; 
+   //    //for setting map controls
+   //    	mapContainer.style.display = "block";
+
+   //    	//evaluate after mapContainer added to DOM
+   //      var containerIs500 = mapContainer.clientWidth > 500;  
+	  //   	console.log(containerIs500,":",mapContainer.clientWidth);
+        
+   //      mapEl.style.display = "block";
       
-          mapEl.style.display = "block";
-      
-          if (containerIs500) {
-              map = new google.maps.Map(mapEl, mapOptions);
-              map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
-              controlDiv.style.marginBottom = "25px";
-          } else {
-              map = new google.maps.Map(mapEl, mapOptionsSmall);
-              map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv);
-          };
-          returnObj.assignMapListeners();
+	  //   if (containerIs500) {
+	  //   	map = new google.maps.Map(mapEl, mapOptions);
+	  //       map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
+	  //       controlDiv.style.marginBottom = "25px";
+	  //   } else {
+	        
+	  //       map = new google.maps.Map(mapEl, mapOptionsSmall);
+	  //       map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv);
+	  //   };
+	  //   returnObj.assignMapListeners();
           
-      },
+  	// },
 
 
 
   //listener functions
-        setCenter: function() {
-            map.setCenter(seattle);
-            map.setZoom(15);
-            !function() {
-                centerBtn.style.fontWeight = 400;
-                centerBtn.style.color = "rgb(86,86,86)";
-                centerBtn.innerHTML = "Centered";
-                }();
-            return map.getCenter();
-        },
+        // setCenter: function() {
+        //     map.setCenter(seattle);
+        //     map.setZoom(15);
+        //     !function() {
+        //         centerBtn.style.fontWeight = 400;
+        //         centerBtn.style.color = "rgb(86,86,86)";
+        //         centerBtn.innerHTML = "Centered";
+        //         }();
+        //     return map.getCenter();
+        // },
 
         showMarkerInfo: function() {
             var target = document.getElementById(this.id);
@@ -120,24 +127,28 @@ function initialize() {
             map.setZoom(15);
           },
 
-        assignMapListeners: function() {
-                //listeners
-            google.maps.event.addDomListener(centerBtn, 'click', returnObj.setCenter);
+        // assignMapListeners: function() {
+        //         //listeners
+        //     google.maps.event.addDomListener(centerBtn, 'click', returnObj.setCenter);
 
-            map.addListener('center_changed', function() {
-                centerBtn.style.fontWeight = 500;
-                centerBtn.style.color = "rgb(0,0,0)";
-                centerBtn.innerHTML = "Re-Center";
-            })
+        //     map.addListener('center_changed', function() {
+        //         centerBtn.style.fontWeight = 500;
+        //         centerBtn.style.color = "rgb(0,0,0)";
+        //         centerBtn.innerHTML = "Re-Center";
+        //     })
 
-        },
+        // },
 
-        getMapObj: function() {
-          console.log(map);
-        },
+        // getMapObj: function() {
+        // 	return map;
+        // },
 
         getResultsObj: function() {
-          console.log(resultsObj);
+        	return resultsObj;
+        },
+
+        getPlaceObj: function() {
+        	return placeObj;
         },
 
         //expand places info tab
@@ -174,6 +185,7 @@ function initialize() {
 
         placesCallback: function(place, status) {
           if (status == google.maps.places.PlacesServiceStatus.OK) {
+          	placeObj = place;
             returnObj.buildExpandElement(place);
             //console.log(place);
             } else {
@@ -207,8 +219,6 @@ function initialize() {
         //map search functions
         startSearch: function() {
 
-            headerDiv.style.display = "none";
-            
             if (Object.getOwnPropertyNames(map).length === 0) {
               console.log('new map object- creating new map');
                 returnObj.createMap(seattle);

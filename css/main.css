@@ -45,15 +45,6 @@ ul p {
 }
 
 
-#headerContainer {
-    height: 80px;
-    width: 100%;
-}
-
-#headerContainer h1 {
-    margin: 0;
-}
-
 #searchContainer {
     width: 100%;
 }

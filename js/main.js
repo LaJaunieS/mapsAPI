@@ -1,5 +1,9 @@
 var main = initialize();
 
-main.assignSearchListener();
+//main.assignSearchListener();
 
-main.startSearch();
+//main.startSearch();
+
+searchElements.searchBtn.addEventListener('click', function() {
+	main.startSearch();
+})
