@@ -10,12 +10,15 @@ var mapElements = {
 	mapContainer: document.getElementById('mapContainer'),
 	controlDiv: document.createElement('div'),
 	centerBtn: document.createElement('button')
-}
+};
 
 var resultsElements = {
 	resultsList: document.getElementById('resultsList'),
-	resultsUl: document.createElement('ul')
-}
+	resultsUl: document.createElement('ul'),
+	resultsLiArr : []
+};
+
+resultsElements.resultsUl.id = "list";
 
 //pull results data and assign to a list element that is then appended to resultsUl
 

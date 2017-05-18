@@ -182,6 +182,10 @@ function initialize() {
 
             if (status == google.maps.places.PlacesServiceStatus.OK) {
             	resultsArr = results;
+            	markersArr.forEach(function(marker){
+                     marker.setMap(null);
+                })
+
             	results.forEach(function(item) {
 					//create markers and add listeners from each item in results array
                     var marker = new google.maps.Marker({
@@ -193,6 +197,7 @@ function initialize() {
                             label: '' + i + '',
                             vicinity: item.vicinity
                     });
+                    marker.addListener('click',returnObj.highlightMarkerResult);
                     markersArr.push(marker);
             	})
             } else {
@@ -202,8 +207,13 @@ function initialize() {
     		mapResults = resultsArr;
     		//prefer to call on main.js (where function is declared) for clarity but need to call here because async maps callback 
             createResultsList()
-            
+                       
         },
+
+        highlightMarkerResult: function() {
+			var target = document.getElementById(this.id);
+			highlightTarget(target);
+		},
 		
 		getResultsArr: function() {
 			return resultsArr;

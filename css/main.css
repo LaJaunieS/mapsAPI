@@ -9,6 +9,18 @@
     } 
 }
 
+@keyframes flash {
+  50% {
+    background-color: #d6d6d6;
+    color: #f7f7f7; 
+    }
+  100% {
+    background-color: #f7f7f7;
+    color: #666; 
+    } 
+}
+
+
 body {
     height: 100vh;
     width: 100%;
