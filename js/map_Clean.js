@@ -123,7 +123,7 @@ function initialize() {
 //pull data from aPI and return data
 //create markers from data and add markers to map
 //assign marker listeners
-		startSearch: function() {
+		startSearch: function(fn) {
 			var map = mapObj;
 			if (Object.getOwnPropertyNames(map).length === 0) {
               console.log('new map object- creating new map');
@@ -177,12 +177,11 @@ function initialize() {
                 books : {
                     url: "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
                     scaledSize: new google.maps.Size(30,30)
-                },
+                }
             };
 
             if (status == google.maps.places.PlacesServiceStatus.OK) {
             	resultsArr = results;
-            	console.log(results);
             	results.forEach(function(item) {
 					//create markers and add listeners from each item in results array
                     var marker = new google.maps.Marker({
@@ -197,8 +196,13 @@ function initialize() {
                     markersArr.push(marker);
             	})
             } else {
-            	resultsObj = google.maps.places.PlacesServiceStatus;
+            	resultsArr = google.maps.places.PlacesServiceStatus;
             };
+
+    		mapResults = resultsArr;
+    		//prefer to call on main.js (where function is declared) for clarity but need to call here because async maps callback 
+            createResultsList()
+            
         },
 		
 		getResultsArr: function() {
@@ -207,15 +211,14 @@ function initialize() {
 
 		getMarkersArr: function() {
 			return markersArr;
-		}
-
-
-
-
-
+		},
 
 //pull place data from API on click event
 //return place data and make ready to add to DOM
+
+		searchPlaces: function(id) {
+			console.log('search Places placeholder');	
+		}
 	};
 	return returnObj;
 }

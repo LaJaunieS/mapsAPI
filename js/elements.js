@@ -12,5 +12,14 @@ var mapElements = {
 	centerBtn: document.createElement('button')
 }
 
+var resultsElements = {
+	resultsList: document.getElementById('resultsList'),
+	resultsUl: document.createElement('ul')
+}
+
+//pull results data and assign to a list element that is then appended to resultsUl
+
+
+
 
       

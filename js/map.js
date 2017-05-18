@@ -217,118 +217,118 @@ function initialize() {
         },
 
         //map search functions
-        startSearch: function() {
+  //       startSearch: function() {
 
-            if (Object.getOwnPropertyNames(map).length === 0) {
-              console.log('new map object- creating new map');
-                returnObj.createMap(seattle);
-            } else {
-              console.log('existing map object');
-                map.setCenter(map.getCenter().toJSON());
-                map.setZoom(15);
-                //returnObj.getMapObj();
-            };
-            returnObj.callService();
-        },
+  //           if (Object.getOwnPropertyNames(map).length === 0) {
+  //             console.log('new map object- creating new map');
+  //               returnObj.createMap(seattle);
+  //           } else {
+  //             console.log('existing map object');
+  //               map.setCenter(map.getCenter().toJSON());
+  //               map.setZoom(15);
+  //               //returnObj.getMapObj();
+  //           };
+  //           returnObj.callService();
+  //       },
 
-        callService: function() {
-            var service = new google.maps.places.PlacesService(map);
-            searchParam = JSON.parse(document.getElementById('visible-option').children[0].dataset.searchparams);
+  //       callService: function() {
+  //           var service = new google.maps.places.PlacesService(map);
+  //           searchParam = JSON.parse(document.getElementById('visible-option').children[0].dataset.searchparams);
             
-            var request = {
-                    location: map.getCenter() || seattle,
-                    rankBy: google.maps.places.RankBy.DISTANCE,
-                    type: searchParam.type,
-                    name: searchParam.name  
-                };           
+  //           var request = {
+  //                   location: map.getCenter() || seattle,
+  //                   rankBy: google.maps.places.RankBy.DISTANCE,
+  //                   type: searchParam.type,
+  //                   name: searchParam.name  
+  //               };           
 
-            service.nearbySearch(request, this.searchCallback);
-        },
+  //           service.nearbySearch(request, this.searchCallback);
+  //       },
 
-        searchCallback: function(results, status) {
-            var i =1;
+  //       searchCallback: function(results, status) {
+  //           var i =1;
             
-            var icons = {
-                donuts : {
-                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-                    scaledSize: new google.maps.Size(30,30)
-                },
-                beers : {
-                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-                    scaledSize: new google.maps.Size(30,30)
-                },
-                burgers: {
-                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-                    scaledSize: new google.maps.Size(30,30)
-                },
-                coffee: {
-                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-                    scaledSize: new google.maps.Size(30,30)
-                },
-                books : {
-                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
-                    scaledSize: new google.maps.Size(30,30)
-                },
-            };
+  //           var icons = {
+  //               donuts : {
+  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+  //                   scaledSize: new google.maps.Size(30,30)
+  //               },
+  //               beers : {
+  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+  //                   scaledSize: new google.maps.Size(30,30)
+  //               },
+  //               burgers: {
+  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+  //                   scaledSize: new google.maps.Size(30,30)
+  //               },
+  //               coffee: {
+  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+  //                   scaledSize: new google.maps.Size(30,30)
+  //               },
+  //               books : {
+  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+  //                   scaledSize: new google.maps.Size(30,30)
+  //               },
+  //           };
             
-            var ul = document.createElement('ul');
-            resultsObj = results;                                                                                                                                                                                                                                                                                            
-            //clear earlier markers if any, add new markers, add list results to dom
-            if (status == google.maps.places.PlacesServiceStatus.OK) {
-                markers.forEach(function(marker){
-                    marker.setMap(null);
-                })
+  //           var ul = document.createElement('ul');
+  //           resultsObj = results;                                                                                                                                                                                                                                                                                            
+  //           //clear earlier markers if any, add new markers, add list results to dom
+  //           if (status == google.maps.places.PlacesServiceStatus.OK) {
+  //               markers.forEach(function(marker){
+  //                   marker.setMap(null);
+  //               })
                 
-                resultsList.innerHTML = "";                
-                markers = [];
-                //console.log(results);
-                results.forEach(function(item){
-                    //improves relevance of search results
-                    //create markers and add listeners from each item in results array
-                    var marker = new google.maps.Marker({
-                            id: item.place_id,
-                            position: item.geometry.location,
-                            icon: icons[searchParam.name],
-                            map: map,
-                            title: item.name + "\n" + item.vicinity,
-                            label: '' + i + '',
-                            vicinity: item.vicinity
-                    });
-                    markers.push(marker);
+  //               resultsList.innerHTML = "";                
+  //               markers = [];
+  //               //console.log(results);
+  //               results.forEach(function(item){
+  //                   //improves relevance of search results
+  //                   //create markers and add listeners from each item in results array
+  //                   var marker = new google.maps.Marker({
+  //                           id: item.place_id,
+  //                           position: item.geometry.location,
+  //                           icon: icons[searchParam.name],
+  //                           map: map,
+  //                           title: item.name + "\n" + item.vicinity,
+  //                           label: '' + i + '',
+  //                           vicinity: item.vicinity
+  //                   });
+  //                   markers.push(marker);
                         
-                    var li = document.createElement('li');
-                    li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><div class='expand'><p>More</p></div><div class='placeInfo'></div>";
-                    li.id = item.place_id;
-                    li.location = item.geometry.location;
+  //                   var li = document.createElement('li');
+  //                   li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><div class='expand'><p>More</p></div><div class='placeInfo'></div>";
+  //                   li.id = item.place_id;
+  //                   li.location = item.geometry.location;
                     
-                    google.maps.event.addDomListener(li,'click',returnObj.centerOnResult);
-                    ul.appendChild(li);
+  //                   google.maps.event.addDomListener(li,'click',returnObj.centerOnResult);
+  //                   ul.appendChild(li);
 
-                    marker.addListener('mouseover', returnObj.showMarkerInfo);
-                    marker.addListener('mouseout', returnObj.removeMarkerInfo);
-                    i++;
-                });
+  //                   marker.addListener('mouseover', returnObj.showMarkerInfo);
+  //                   marker.addListener('mouseout', returnObj.removeMarkerInfo);
+  //                   i++;
+  //               });
 
-                resultsList.scrollTop = 0;
-                resultsList.style.visibility = "visible";
-                if (windowIs760) {
-                    resultsList.style.height = "90vh";
-                } else {
-                    resultsList.style.height = "400px";
-                };
-                resultsList.appendChild(ul);
-                placeInfoPopulated = false;
-                returnObj.assignPlaceDetailsListeners();
+  //               resultsList.scrollTop = 0;
+  //               resultsList.style.visibility = "visible";
+  //               if (windowIs760) {
+  //                   resultsList.style.height = "90vh";
+  //               } else {
+  //                   resultsList.style.height = "400px";
+  //               };
+  //               resultsList.appendChild(ul);
+  //               placeInfoPopulated = false;
+  //               returnObj.assignPlaceDetailsListeners();
                          
-            } else {
-                console.log('connection error');
-            };
-        },
+  //           } else {
+  //               console.log('connection error');
+  //           };
+  //       },
 
-         assignSearchListener: function() {
-             searchBtn.onclick = returnObj.startSearch;
-         }
-  }
+  //        assignSearchListener: function() {
+  //            searchBtn.onclick = returnObj.startSearch;
+  //        }
+  // }
   
 
 
