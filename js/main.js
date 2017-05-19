@@ -1,5 +1,14 @@
-var main = initialize();
+'use strict'
+var _gmaps = initializeMap();
+var _dom = dom();
 
-main.assignSearchListener();
+var mapResults = [];
+var placeResults = {};
+			
+searchElements.searchBtn.onclick = _gmaps.startSearch;
 
-main.startSearch();
+
+
+
+
+
