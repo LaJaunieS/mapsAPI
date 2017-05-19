@@ -1,6 +1,6 @@
 'use strict'
 
-function initialize() {
+function initializeMap() {
 
 	//"global"(to this function) vars for returning later
 	var mapObj = {},
@@ -141,7 +141,8 @@ function initialize() {
 			var map = mapObj;
 			var service = new google.maps.places.PlacesService(map);
 			var searchEl = searchElements.searchInput;
-				searchParam = JSON.parse(searchEl.dataset.searchparams);
+						
+			searchParam = JSON.parse(searchEl.dataset.searchparams);
             
             var request = {
                     location: returnObj.getMapCtr(),
@@ -154,10 +155,9 @@ function initialize() {
         },
 
         searchCallback: function(results,status) {
+        	var i = 1;
         	var map = mapObj;
-        	var i =1;
-            
-            var icons = {
+        	var icons = {
                 donuts : {
                     url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
                     scaledSize: new google.maps.Size(30,30)
@@ -187,6 +187,7 @@ function initialize() {
                 })
 
             	results.forEach(function(item) {
+            		
 					//create markers and add listeners from each item in results array
                     var marker = new google.maps.Marker({
                             id: item.place_id,
@@ -199,20 +200,21 @@ function initialize() {
                     });
                     marker.addListener('click',returnObj.highlightMarkerResult);
                     markersArr.push(marker);
+                    i++;
             	})
             } else {
             	resultsArr = google.maps.places.PlacesServiceStatus;
             };
 
     		mapResults = resultsArr;
-    		//prefer to call on main.js (where function is declared) for clarity but need to call here because async maps callback 
-            createResultsList()
+    		//prefer to call on dom.js (where function is declared) for clarity but need to call here because async maps callback 
+            _dom.createResultsList()
                        
         },
 
         highlightMarkerResult: function() {
 			var target = document.getElementById(this.id);
-			highlightTarget(target);
+			_dom.highlightTarget(target);
 		},
 		
 		getResultsArr: function() {
@@ -242,7 +244,7 @@ function initialize() {
 		placesCallback: function(place,status) {
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 				placeResults = place;
-				expandPlacesDiv(placeResults.place_id)
+				_dom.expandPlacesDiv(placeResults.place_id)
 			} else {
 				placesObj = status;
 			}
