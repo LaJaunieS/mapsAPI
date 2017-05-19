@@ -18,6 +18,12 @@ var resultsElements = {
 	resultsLiArr : []
 };
 
+var placesElements = {
+	placeInfo: "",
+	placesUl : document.createElement("ul"),
+	openHoursLi : document.createElement("li")
+};
+
 resultsElements.resultsUl.id = "list";
 
 //pull results data and assign to a list element that is then appended to resultsUl

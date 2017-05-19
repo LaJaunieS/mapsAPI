@@ -223,11 +223,29 @@ function initialize() {
 			return markersArr;
 		},
 
+		getPlacesObj: function() {
+			return placesObj;
+		},
+
 //pull place data from API on click event
 //return place data and make ready to add to DOM
 
 		searchPlaces: function(id) {
-			console.log('search Places placeholder');	
+			var map = mapObj;
+			var request = {
+				placeId: id
+			};
+			var service = new google.maps.places.PlacesService(map)
+			service.getDetails(request, returnObj.placesCallback);
+		},
+
+		placesCallback: function(place,status) {
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				placeResults = place;
+				expandPlacesDiv(placeResults.place_id)
+			} else {
+				placesObj = status;
+			}
 		}
 	};
 	return returnObj;
