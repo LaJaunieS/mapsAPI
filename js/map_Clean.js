@@ -102,8 +102,7 @@ function initializeMap() {
 			var map = mapObj;
 			var centerBtn = mapElements.centerBtn;
 			var ctr = currentCtr;
-
-		    map.setCenter(ctr);
+			map.setCenter(ctr);
             map.setZoom(15);
             !function() {
                 centerBtn.style.fontWeight = 400;
@@ -238,6 +237,10 @@ function initializeMap() {
 			return directionsObj;
 		},
 
+		getDirectionsDisplay: function() {
+			return directionsDisplay;
+		},
+
 //pull place data from API on click event
 //return place data and make ready to add to DOM
 
@@ -248,17 +251,6 @@ function initializeMap() {
 			};
 			var service = new google.maps.places.PlacesService(map);
 
-			//if directions lookup would have cleared markers- re-add to map
-			markersArr.forEach(function(marker){
-				if (marker.map === null) {
-					marker.setMap(map);
-				};
-			});
-			
-			if (directionsDisplay !== undefined) {
-				directionsDisplay.setMap(null);
-																																																																																																																										};
-			
 			service.getDetails(request, returnObj.placesCallback);
 		},
 
@@ -272,6 +264,12 @@ function initializeMap() {
 			}
 		},
 
+		removeExistingDirectionDisplay: function() {
+			if (directionsDisplay) {
+				directionsDisplay.setMap(null);
+			};
+		},
+
 		startDirections: function(location) {
 			var map = mapObj;
 			var request = {
@@ -279,10 +277,7 @@ function initializeMap() {
 				destination: location,
 				travelMode: 'DRIVING'
 			};
-			markersArr.forEach(function(marker){
-				marker.setMap(null);
-			});
-
+			returnObj.removeExistingDirectionDisplay();
 			directionsDisplay = new google.maps.DirectionsRenderer();
 			var directionsService = new google.maps.DirectionsService();
 			directionsDisplay.setMap(map);
@@ -293,10 +288,17 @@ function initializeMap() {
 			if (status == "OK") {
 				directionsDisplay.setDirections(result);
 				directionsObj = result;
+				markersArr.forEach(function(marker){
+					marker.setMap(null);
+			});
+
+
 			} else {
 				console.log(status);
 			};
 		}
+
+		
 
 	};
 	return returnObj;

@@ -1,4 +1,4 @@
-function dom() {
+	function dom() {
 	var	windowIs760 = container.clientWidth >= 760,
 		
 		returnObj = {
@@ -38,9 +38,17 @@ function dom() {
 		},
 
 		centerOnResult: function() {
+			var map = _gmaps.getMapObj();
+			
 			_gmaps.getMapObj().setCenter(this.location);
 			_gmaps.getMapObj().setZoom(15);
-
+			//if directions lookup would have cleared markers- re-add to map
+			_gmaps.getMarkersArr().forEach(function(marker){
+				if (marker.map === null) {
+					marker.setMap(map);
+				};
+			});
+			
 		},
 
 		highlightTarget: function(target) {
