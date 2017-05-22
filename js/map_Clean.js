@@ -246,7 +246,19 @@ function initializeMap() {
 			var request = {
 				placeId: id
 			};
-			var service = new google.maps.places.PlacesService(map)
+			var service = new google.maps.places.PlacesService(map);
+
+			//if directions lookup would have cleared markers- re-add to map
+			markersArr.forEach(function(marker){
+				if (marker.map === null) {
+					marker.setMap(map);
+				};
+			});
+			
+			if (directionsDisplay !== undefined) {
+				directionsDisplay.setMap(null);
+																																																																																																																										};
+			
 			service.getDetails(request, returnObj.placesCallback);
 		},
 
@@ -267,6 +279,10 @@ function initializeMap() {
 				destination: location,
 				travelMode: 'DRIVING'
 			};
+			markersArr.forEach(function(marker){
+				marker.setMap(null);
+			});
+
 			directionsDisplay = new google.maps.DirectionsRenderer();
 			var directionsService = new google.maps.DirectionsService();
 			directionsDisplay.setMap(map);
