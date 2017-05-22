@@ -11,18 +11,24 @@
 	padding-left: 0;
 }
 
+#buttons {
+
+}
 
 .btn-contact {
 	border: none;
 	color: #f7f7f7;
+	cursor: pointer;
 	height: 35px;
 	padding: 0;
 	margin: 16px 0;
-	width: 120px;
+	width: 100px;
+	/*to do -add sass lighten rules on color for hovers*/
 	}
 
-.btn-contact:first-child {
-	margin-right: 15px;
+
+.btn-directions {
+	background-color: gray;/*modify later when working on palette*/
 }
 
 .btn-website {

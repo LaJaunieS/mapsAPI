@@ -72,10 +72,11 @@ function dom() {
 			var addr = placeResults.formatted_address;
 			var openOrClosed = placeResults.opening_hours.open_now;
 			var testIfOpen = returnObj.setOpenClosed(openOrClosed);
-			
+			var openClosedEl;
+			var directionsBtn;
 			
 			placesElements.placesUl.innerHTML = "";
-			placesElements.placesUl.innerHTML = '<li>' + placeResults.formatted_address + '</li> <li> <button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button> </li> <li id="open-or-closed">' + testIfOpen + '</li>'; 
+			placesElements.placesUl.innerHTML = '<li>' + placeResults.formatted_address + '</li> <li id="buttons"> <button class="btn-contact btn-directions">Directions</button><button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button> </li> <li id="open-or-closed">' + testIfOpen + '</li>'; 
 			
 			placesElements.openHoursLi.class = "open-hours";
 			placesElements.openHoursLi.innerHTML = '<div> <ul>';
@@ -89,6 +90,7 @@ function dom() {
 			//placesElements.placeInfo.innerHTML = "";
 			
 			placesElements.placeInfo.appendChild(placesElements.placesUl);
+			
 			openClosedEl = document.getElementById('open-or-closed');
 			if (openOrClosed) {
 				openClosedEl.className = "open";
@@ -96,8 +98,11 @@ function dom() {
 				openClosedEl.className = "closed";
 			};
 
-
-
+			directionsBtn = document.querySelector('.btn-directions');
+			directionsBtn.addEventListener('click', function() {
+				_gmaps.startDirections(placeResults.geometry.location);
+		});
+			
 		}
 	};
 

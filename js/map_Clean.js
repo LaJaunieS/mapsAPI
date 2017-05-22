@@ -6,10 +6,15 @@ function initializeMap() {
 	var mapObj = {},
 		markersArr = [],
 		resultsArr = [],
-		placesObj = {};
+		placesObj = {},
+		directionsObj = {};
+
 	var seattle = { lat: 47.6062, lng: -122.3321 };
 	var currentCtr;
 	var searchParam;
+
+	var directionsDisplay;
+
 
 	var returnObj = {
 
@@ -229,6 +234,10 @@ function initializeMap() {
 			return placesObj;
 		},
 
+		getDirectionsObj: function() {
+			return directionsObj;
+		},
+
 //pull place data from API on click event
 //return place data and make ready to add to DOM
 
@@ -244,11 +253,35 @@ function initializeMap() {
 		placesCallback: function(place,status) {
 			if (status == google.maps.places.PlacesServiceStatus.OK) {
 				placeResults = place;
+				placesObj = place;
 				_dom.expandPlacesDiv(placeResults.place_id)
 			} else {
 				placesObj = status;
 			}
+		},
+
+		startDirections: function(location) {
+			var map = mapObj;
+			var request = {
+				origin: 'Seattle, WA',
+				destination: location,
+				travelMode: 'DRIVING'
+			};
+			directionsDisplay = new google.maps.DirectionsRenderer();
+			var directionsService = new google.maps.DirectionsService();
+			directionsDisplay.setMap(map);
+			directionsService.route(request, returnObj.directionsCallback)
+		},
+
+		directionsCallback: function(result, status) {
+			if (status == "OK") {
+				directionsDisplay.setDirections(result);
+				directionsObj = result;
+			} else {
+				console.log(status);
+			};
 		}
+
 	};
 	return returnObj;
 }
