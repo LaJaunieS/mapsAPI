@@ -33,10 +33,15 @@
 	background-color: rgba(14,21,75,1.0);
 }
 
+.open {
+	color: #3b8ede;
+}
 
+.closed {
+	color: red; /*modify later when applying color palette*/
+}
 
 #open-or-closed {
-   color: #3b8ede;
    margin: 0 0 16px;
  }
 
