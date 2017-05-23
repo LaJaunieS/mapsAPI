@@ -189,6 +189,10 @@ function initializeMap() {
             	markersArr.forEach(function(marker){
                      marker.setMap(null);
                 })
+                markersArr = [];
+                console.log('removing any existing markers');
+
+                returnObj.removeExistingDirectionDisplay();
 
             	results.forEach(function(item) {
             		
@@ -250,7 +254,7 @@ function initializeMap() {
 				placeId: id
 			};
 			var service = new google.maps.places.PlacesService(map);
-
+			returnObj.removeExistingDirectionDisplay();
 			service.getDetails(request, returnObj.placesCallback);
 		},
 
@@ -265,9 +269,14 @@ function initializeMap() {
 		},
 
 		removeExistingDirectionDisplay: function() {
+			console.log('removing any existing directions');
 			if (directionsDisplay) {
 				directionsDisplay.setMap(null);
 			};
+			// markersArr.forEach(function(marker){
+			// 	marker.setMap(null);
+			// });
+			
 		},
 
 		startDirections: function(location) {
