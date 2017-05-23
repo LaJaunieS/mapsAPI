@@ -12,7 +12,7 @@ function initializeMap() {
 	var seattle = { lat: 47.6062, lng: -122.3321 };
 	var currentCtr;
 	var searchParam;
-
+	var userLoc;
 	var directionsDisplay;
 
 
@@ -119,6 +119,23 @@ function initializeMap() {
 			return mapObj;
 		},
 
+		getUserLoc: function() {
+			return userLoc;
+		},
+
+		//doesn't really set it, just passes it to a variable
+		setUserLoc: function(position) {
+			userLoc = { 
+			 	lat: _getUserLocation.getloc().coords.latitude,
+			 	lng: _getUserLocation.getloc().coords.longitude
+				 };
+			return userLoc;
+		},
+
+		getLocationBeingUsed: function() {
+			return userLoc || seattle;
+		},
+
 
 
 //pull data from aPI and return data
@@ -129,11 +146,11 @@ function initializeMap() {
 			var ctr;
 			if (Object.getOwnPropertyNames(map).length === 0) {
               	console.log('new map object- creating new map');
-                returnObj.createMap(seattle);
+                returnObj.createMap(userLoc || seattle);
             } else {
               	console.log('existing map object');
               	//recenter map on new map bounds center
-              	currentCtr = returnObj.getMapCtr();
+              	currentCtr = userLoc || returnObj.getMapCtr();
               	returnObj.setMapCenter();
             };
             returnObj.callService();
@@ -276,7 +293,7 @@ function initializeMap() {
 		startDirections: function(location) {
 			var map = mapObj;
 			var request = {
-				origin: 'Seattle, WA',
+				origin: userLoc || seattle,
 				destination: location,
 				travelMode: 'DRIVING'
 			};

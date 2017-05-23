@@ -6,8 +6,8 @@
 'use strict'
 var _gmaps = initializeMap();
 var _dom = dom();
-
 var _getUserLocation = getUserLocation();
+
 	
 
 navigator.geolocation.getCurrentPosition(function(position){

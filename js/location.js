@@ -21,6 +21,7 @@ function getUserLocation() {
 				//check for geolocation property in browser
 				if (position) {
 					loc = position;
+					_gmaps.setUserLoc(loc);
 				} else {
 					console.log("Unable to get location information. This feature may not be suppored in your browser");
 					loc = undefined;
