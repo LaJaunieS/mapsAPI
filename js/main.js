@@ -7,11 +7,21 @@
 var _gmaps = initializeMap();
 var _dom = dom();
 
+var _getUserLocation = getUserLocation();
+	
+
+navigator.geolocation.getCurrentPosition(function(position){
+	_getUserLocation.setLocation(position);
+	});
+
+
 var mapResults = [];
 var placeResults = {};
 
 			
 searchElements.searchBtn.onclick = _gmaps.startSearch;
+
+
 
 
 
