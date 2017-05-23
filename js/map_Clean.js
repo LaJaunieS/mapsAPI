@@ -99,9 +99,11 @@ function initializeMap() {
 		},
 
 		setMapCenter: function() {
+			//uses map,setCenter but also other changes to zoom and centerBtn
 			var map = mapObj;
 			var centerBtn = mapElements.centerBtn;
 			var ctr = currentCtr;
+			
 			map.setCenter(ctr);
             map.setZoom(15);
             !function() {
@@ -113,6 +115,7 @@ function initializeMap() {
         },
 		
 		getMapCtr: function() {
+			//if new map ctrs on seattle otherwise current center
 			var map = mapObj;
 			var ctr = Object.getOwnPropertyNames(map).length === 0? seattle: map.getCenter();
 			return ctr;
@@ -129,14 +132,15 @@ function initializeMap() {
 //assign marker listeners
 		startSearch: function(fn) {
 			var map = mapObj;
+			var ctr;
 			if (Object.getOwnPropertyNames(map).length === 0) {
-              console.log('new map object- creating new map');
+              	console.log('new map object- creating new map');
                 returnObj.createMap(seattle);
             } else {
-              console.log('existing map object');
-                map.setCenter(map.getCenter().toJSON());
-                map.setZoom(15);
-                //returnObj.getMapObj();
+              	console.log('existing map object');
+              	//recenter map on new map bounds center
+              	currentCtr = returnObj.getMapCtr();
+              	returnObj.setMapCenter();
             };
             returnObj.callService();
 		},
