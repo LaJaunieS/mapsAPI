@@ -277,10 +277,6 @@ function initializeMap() {
 			if (directionsDisplay) {
 				directionsDisplay.setMap(null);
 			};
-			// markersArr.forEach(function(marker){
-			// 	marker.setMap(null);
-			// });
-			
 		},
 
 		startDirections: function(location) {

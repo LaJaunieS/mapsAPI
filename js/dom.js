@@ -84,7 +84,7 @@
 			var directionsBtn;
 			
 			placesElements.placesUl.innerHTML = "";
-			placesElements.placesUl.innerHTML = '<li>' + placeResults.formatted_address + '</li> <li id="buttons"> <button class="btn-contact btn-directions">Directions</button><button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button> </li> <li id="open-or-closed">' + testIfOpen + '</li>'; 
+			placesElements.placesUl.innerHTML = '<li>' + placeResults.formatted_address + '</li> <li id="buttons"> <button class="btn-contact btn-directions">Directions</button><a href="tel:'+ placeResults.formatted_phone_number + '"><button class="btn-contact btn-phone">Phone</button></a><a target="_blank" href="' + placeResults.website + '"><button class="btn-contact btn-website">Website</button></a> </li> <li id="open-or-closed">' + testIfOpen + '</li>'; 
 			
 			placesElements.openHoursLi.class = "open-hours";
 			placesElements.openHoursLi.innerHTML = '<div> <ul>';
