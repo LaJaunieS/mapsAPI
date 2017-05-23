@@ -1,39 +1,38 @@
-	function dom() {
+function dom() {
 	var	windowIs760 = container.clientWidth >= 760,
 		
 		returnObj = {
 
-			createResultsList: function() {
-	
-				var i = 1;
-				resultsElements.resultsUl.innerHTML = "";
-				resultsElements.resultsLiArr = [];
-				resultsElements.resultsList.style.visibility = "visible";
-				resultsList.scrollTop = 0;
-				mapResults = _gmaps.getResultsArr();
-				mapResults.forEach(function(item){
-					var li = document.createElement('li');
-					var expandLink;
-		
-					li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><div class='expand'><p>More</p></div><div class='placeInfo'></div>";
-  					li.id = item.place_id;
-  					li.location = item.geometry.location;
-  					resultsElements.resultsLiArr.push(li);
-  					li.onclick = _dom.centerOnResult;
-  					resultsElements.resultsUl.appendChild(li);
-  					resultsElements.resultsList.appendChild(resultsElements.resultsUl);
-  					expandLink = li.querySelector('.expand p');
+		createResultsList: function() {
+			var i = 1;
+			resultsElements.resultsUl.innerHTML = "";
+			resultsElements.resultsLiArr = [];
+			resultsElements.resultsList.style.visibility = "visible";
+			resultsList.scrollTop = 0;
+			mapResults = _gmaps.getResultsArr();
+			mapResults.forEach(function(item){
+				var li = document.createElement('li');
+				var expandLink;
 
-  					expandLink.addEventListener('click', function() {
-  						_dom.placesTarget(li.id);
-  					});
+				li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><div class='expand'><p>More</p></div><div class='placeInfo'></div>";
+  				li.id = item.place_id;
+  				li.location = item.geometry.location;
+  				resultsElements.resultsLiArr.push(li);
+  				li.onclick = _dom.centerOnResult;
+  				resultsElements.resultsUl.appendChild(li);
+  				resultsElements.resultsList.appendChild(resultsElements.resultsUl);
+  				expandLink = li.querySelector('.expand p');
+				
+				expandLink.addEventListener('click', function() {
+					_dom.placesTarget(li.id);
+  				});
   				
-	  				if (windowIs760) {
-	  					resultsList.style.height = "90vh";
-	  				} else {
-	            		resultsList.style.height = "400px";
-	  				};
-	  				i++;
+	  			if (windowIs760) {
+	  				resultsList.style.height = "90vh";
+	  			} else {
+	            	resultsList.style.height = "400px";
+	  			};
+	  			i++;
 			});
 		},
 
@@ -62,8 +61,6 @@
 			var target = document.getElementById(id);
 			_gmaps.searchPlaces(id);
 		},
-
-
 
 		setOpenClosed: function(openOrClosed) {
 			if (openOrClosed) {

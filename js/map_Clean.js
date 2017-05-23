@@ -35,16 +35,13 @@ function initializeMap() {
 	            mapTypeId: 'roadmap',
 	            tilt: 45,
 	            heading: 0,
-	            //prevents one-finger scrolling on map on a mobile device
 	            gestureHandling: 'cooperative',
 	            zoomControl: true,
 	            mapTypeControl: true,
 	            streetViewControl: true,
 	            rotateControl: true,
 	            fullscreenControl: true,
-	            //ui positioning property
 	            streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM  },
-	            //styling for map
 	            styles: mapStyles
 			};
 			var mapOptionsSmall = {
@@ -53,14 +50,12 @@ function initializeMap() {
 	            zoom: 12,
 	            mapTypeId: 'roadmap',
 	            heading: 0,
-	            //prevents one-finger scrolling on map on a mobile device
 	            gestureHandling: 'greedy',
 	            zoomControl: false,
 	            mapTypeControl: false,
 	            streetViewControl: false,
 	            rotateControl: false,
 	            fullscreenControl: false,
-	            //styling for map
 	            styles: mapStyles
 			};
 			
@@ -80,9 +75,9 @@ function initializeMap() {
 		    	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv);
 		    };
 		 
-		mapObj = map;
-		currentCtr = returnObj.getMapCtr();
-		returnObj.assignMapListeners();
+			mapObj = map;
+			currentCtr = returnObj.getMapCtr();
+			returnObj.assignMapListeners();
 		
 		},
 	  
@@ -111,7 +106,6 @@ function initializeMap() {
                 centerBtn.style.color = "rgb(86,86,86)";
                 centerBtn.innerHTML = "Centered";
                 }();
-            //return map.getCenter();
         },
 		
 		getMapCtr: function() {
