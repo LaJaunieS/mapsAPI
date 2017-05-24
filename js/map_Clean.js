@@ -132,13 +132,7 @@ function initializeMap() {
 			return userLoc;
 		},
 
-		getLocationBeingUsed: function() {
-			return userLoc || returnObj.getMapCtr();
-		},
-
-
-
-//pull data from aPI and return data
+		//pull data from aPI and return data
 //create markers from data and add markers to map
 //assign marker listeners
 		startSearch: function(fn) {
@@ -151,7 +145,6 @@ function initializeMap() {
               	console.log('existing map object');
               	//recenter map on new map bounds center
               	//clear initial loc value based on user loc
-              	userLoc = null;
               	currentCtr = returnObj.getMapCtr();
               	returnObj.setMapCenter();
             };
