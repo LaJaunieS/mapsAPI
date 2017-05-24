@@ -3,19 +3,15 @@
 //something isn't working with initial input option
 
 'use strict'
-var _gmaps = initializeMap();
-var _dom = dom();
-var _getUserLocation = getUserLocation();
-
-	
+var _gmaps = initializeMap(),
+	_dom = dom(),
+	_getUserLocation = getUserLocation(),
+	mapResults = [],
+	placeResults = {};
 
 navigator.geolocation.getCurrentPosition(function(position){
 	_getUserLocation.setLocation(position);
-	});  //add error handler; not currently working in safari/mobile
-
-
-var mapResults = [];
-var placeResults = {};
+	});  //add error handler; 
 
 			
 searchElements.searchBtn.onclick = _gmaps.startSearch;
