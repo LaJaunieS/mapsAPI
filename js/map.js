@@ -1,341 +1,319 @@
 'use strict'
 
-function initialize() {
+function initializeMap() {
 
-    //console.log('test');
-  //existing DOM elements
-  var 
-      //vvstays//
-      
-      searchBtn = document.getElementById('searchBtn'),
-      resultsList = document.getElementById('resultsList'),
-      targetPlaceDiv,
-      searchParam;
+	//"global"(to this function) vars for returning later
+	var mapObj = {},
+		markersArr = [],
+		resultsArr = [],
+		placesObj = {},
+		directionsObj = {};
 
-  //set custom controls
-  var controlDiv = document.createElement('div'),
-      centerBtn = document.createElement('button');
-      controlDiv.id="controlDiv";
-      centerBtn.id = "center";
-      centerBtn.innerHTML = "Centered";
-      controlDiv.appendChild(centerBtn);
+	var seattle = { lat: 47.6062, lng: -122.3321 };
+	
+	var currentCtr, 
+		searchParam,
+		userLoc,
+		directionsDisplay;
 
 
-  //map variables
-  var map= {},
-      markers = [],
-      resultsObj = {},
-      placeObj = {};
-    
-  //breakpoint in css, other map conditions
-  var windowIs760 = container.clientWidth >= 760,
-      seattle = { lat: 47.6062, lng: -122.3321 },
-      placeInfoPopulated = false;
+	var returnObj = {
 
+		//create map and make ready to add to DOM
+		//custom map control functions
+		//assign map button listeners
+		createMap: function(ctr) {
+			var map,
+				containerIs500,
+				mapEl = mapElements.mapEl,
+				mapContainer = mapElements.mapContainer,
+				controlDiv = mapElements.controlDiv,
+				centerBtn = mapElements.centerBtn;
 
-  //map create only after click event on search button
+			var mapOptions = {
+				center: ctr,
+	            zoom: 15,
+	            mapTypeId: 'roadmap',
+	            tilt: 45,
+	            heading: 0,
+	            gestureHandling: 'cooperative',
+	            zoomControl: true,
+	            mapTypeControl: true,
+	            streetViewControl: true,
+	            rotateControl: true,
+	            fullscreenControl: true,
+	            streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM  },
+	            styles: mapStyles
+			};
+			var mapOptionsSmall = {
+				//options for smaller viewport= removes ui controls except for zoom
+	            center: ctr,
+	            zoom: 12,
+	            mapTypeId: 'roadmap',
+	            heading: 0,
+	            gestureHandling: 'greedy',
+	            zoomControl: false,
+	            mapTypeControl: false,
+	            streetViewControl: false,
+	            rotateControl: false,
+	            fullscreenControl: false,
+	            styles: mapStyles
+			};
+			
+			controlDiv.id = "controlDiv";
+			centerBtn.id = "center";
+      		centerBtn.innerHTML = "Centered";
+      		controlDiv.appendChild(centerBtn);
+      		mapContainer.style.display = "block";
+			containerIs500 = mapContainer.clientWidth > 500;	
 
-  var returnObj = {
-   //    createMap: function (ctr) {
-   //    	var mapEl = document.getElementById('map');
-   //    	var mapContainer = document.getElementById('mapContainer');
-   //      var mapOptionsSmall = {
-   //            //options for smaller viewport= removes ui controls except for zoom
-   //            center: ctr,
-   //            zoom: 12,
-   //            mapTypeId: 'roadmap',
-   //            heading: 0,
-   //            //prevents one-finger scrolling on map on a mobile device
-   //            gestureHandling: 'greedy',
-   //            zoomControl: false,
-   //            mapTypeControl: false,
-   //            streetViewControl: false,
-   //            rotateControl: false,
-   //            fullscreenControl: false,
-   //            //styling for map
-   //            styles: mapStyles
-   //        }; 
-   //      var mapOptions = {
-   //            center: ctr,
-   //            zoom: 15,
-   //            mapTypeId: 'roadmap',
-   //            tilt: 45,
-   //            heading: 0,
-   //            //prevents one-finger scrolling on map on a mobile device
-   //            gestureHandling: 'cooperative',
-   //            zoomControl: true,
-   //            mapTypeControl: true,
-   //            streetViewControl: true,
-   //            rotateControl: true,
-   //            fullscreenControl: true,
-   //            //ui positioning property
-   //            streetViewControlOptions: { position: google.maps.ControlPosition.LEFT_BOTTOM  },
-   //            //styling for map
-   //            styles: mapStyles
-   //        }; 
-   //    //for setting map controls
-   //    	mapContainer.style.display = "block";
+			if (containerIs500) {
+		    	map = new google.maps.Map(mapEl, mapOptions);
+			   	map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
+		    	controlDiv.style.marginBottom = "25px";
+	    	} else {
+	        	map = new google.maps.Map(mapEl, mapOptionsSmall);
+		    	map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv);
+		    };
+		 
+			mapObj = map;
+			currentCtr = returnObj.getMapCtr();
+			returnObj.assignMapListeners();
+			
+		},
+	  	
+	  	//#####event handlers######
+		assignMapListeners: function() {
+			var centerBtn = mapElements.centerBtn;
 
-   //    	//evaluate after mapContainer added to DOM
-   //      var containerIs500 = mapContainer.clientWidth > 500;  
-	  //   	console.log(containerIs500,":",mapContainer.clientWidth);
-        
-   //      mapEl.style.display = "block";
-      
-	  //   if (containerIs500) {
-	  //   	map = new google.maps.Map(mapEl, mapOptions);
-	  //       map.controls[google.maps.ControlPosition.BOTTOM_CENTER].push(controlDiv);
-	  //       controlDiv.style.marginBottom = "25px";
-	  //   } else {
-	        
-	  //       map = new google.maps.Map(mapEl, mapOptionsSmall);
-	  //       map.controls[google.maps.ControlPosition.LEFT_BOTTOM].push(controlDiv);
-	  //   };
-	  //   returnObj.assignMapListeners();
-          
-  	// },
+			google.maps.event.addDomListener(centerBtn, 'click', returnObj.setMapCenter);
 
+            mapObj.addListener('center_changed', function() {
+                centerBtn.style.fontWeight = 500;
+                centerBtn.style.color = "rgb(0,0,0)";
+                centerBtn.innerHTML = "Re-Center";
+            })
+		},
 
+		highlightMarkerResult: function() {
+			var target = document.getElementById(this.id);
+			_dom.highlightTarget(target);
+		},
+		
 
-  //listener functions
-        // setCenter: function() {
-        //     map.setCenter(seattle);
-        //     map.setZoom(15);
-        //     !function() {
-        //         centerBtn.style.fontWeight = 400;
-        //         centerBtn.style.color = "rgb(86,86,86)";
-        //         centerBtn.innerHTML = "Centered";
-        //         }();
-        //     return map.getCenter();
-        // },
-
-        showMarkerInfo: function() {
-            var target = document.getElementById(this.id);
-            var targetOffSet = target.offsetTop-400;
-            target.style.backgroundColor = "efefef";
-            resultsList.scrollTop = targetOffSet;
-            target.style.backgroundColor = "#efefef";
-        },
-
-        removeMarkerInfo: function() {
-            var target = document.getElementById(this.id);
-            target.style.backgroundColor = "#fff";
-        },
-
-        centerOnResult: function() {
-            map.setCenter(this.location);
+		setMapCenter: function() {
+			//uses map,setCenter but also other changes to zoom and centerBtn
+			var map = mapObj;
+			var centerBtn = mapElements.centerBtn;
+			var ctr = currentCtr;
+			
+			map.setCenter(ctr);
             map.setZoom(15);
-          },
-
-        // assignMapListeners: function() {
-        //         //listeners
-        //     google.maps.event.addDomListener(centerBtn, 'click', returnObj.setCenter);
-
-        //     map.addListener('center_changed', function() {
-        //         centerBtn.style.fontWeight = 500;
-        //         centerBtn.style.color = "rgb(0,0,0)";
-        //         centerBtn.innerHTML = "Re-Center";
-        //     })
-
-        // },
-
-        // getMapObj: function() {
-        // 	return map;
-        // },
-
-        getResultsObj: function() {
-        	return resultsObj;
+            !function() {
+                centerBtn.style.fontWeight = 400;
+                centerBtn.style.color = "rgb(86,86,86)";
+                centerBtn.innerHTML = "Centered";
+                }();
         },
-
-        getPlaceObj: function() {
-        	return placeObj;
-        },
-
-        //expand places info tab
-        assignPlaceDetailsListeners: function() {
-            var expand = document.querySelectorAll('.expand');
-            //console.log(expand);
-            for(var aa = 0; aa < expand.length; aa++) {
-                expand[aa].addEventListener('click', function(){
-                  var id = this.parentNode.id;
-                      returnObj.searchPlaces(id);
-                  });
-            };
-        //console.log(expand);
-        },
-
-        //build search request based on li element id and send to call
-        searchPlaces: function(id) {
-                var request = {
-                  placeId: id
-                };
-                var service = new google.maps.places.PlacesService(map);
-          //clear any existing expanded info templates before starting new search
-                targetPlaceDiv = document.querySelectorAll('.placeInfo');
-
-                
-                for(var i = 0; i < targetPlaceDiv.length; i++) {
-                   targetPlaceDiv[i].innerHTML = "";
-                };
-
-
-                //console.log(request.placeId);
-                service.getDetails(request,returnObj.placesCallback);
-          },
-
-        placesCallback: function(place, status) {
-          if (status == google.maps.places.PlacesServiceStatus.OK) {
-          	placeObj = place;
-            returnObj.buildExpandElement(place);
-            //console.log(place);
+		
+		//#####categories search functions#####
+		startSearch: function(fn) {
+			var map = mapObj;
+			var ctr;
+			if (Object.getOwnPropertyNames(map).length === 0) {
+              	console.log('new map object- creating new map');
+                returnObj.createMap(userLoc || seattle);
             } else {
-              console.log(status);
-            }
+              	console.log('existing map object');
+              	//recenter map on new map bounds center
+              	//clear initial loc value based on user loc
+              	currentCtr = returnObj.getMapCtr();
+              	returnObj.setMapCenter();
+            };
+            returnObj.callService();
+		},
+
+		callService: function() {
+			var map = mapObj;
+			var service = new google.maps.places.PlacesService(map);
+			var searchEl = searchElements.searchInput;
+						
+			searchParam = JSON.parse(searchEl.dataset.searchparams);
+            
+            var request = {
+                    location: returnObj.getMapCtr(),
+                    rankBy: google.maps.places.RankBy.DISTANCE,
+                    type: searchParam.type,
+                    name: searchParam.name  
+                };           
+
+            service.nearbySearch(request, returnObj.searchCallback);
         },
 
-        buildExpandElement: function(place) {
-          var targetLi  = document.getElementById(place.place_id)
-          targetPlaceDiv = targetLi.querySelector('.placeInfo');
-                   
-          if (place.hasOwnProperty('place_id')) {
-            var placeLi = place.place_id;
-          } else {
-            var placeLi = place;
-          };
-          //need to close placeDiv when more button clicked again
-          //need to clear out open placeDivs when another li element clicked 
-          
-          var placeInfoHTML = '<ul><li>' + place.formatted_address + '</li><li><button class="btn-contact btn-website">Phone</button><button class="btn-contact btn-phone">Website</button></li> <li id="open-or-closed">Open Now</li> <li id="open-hours">Hours <img src="img/chevron-down.png">    <div><ul> <li>' + place.opening_hours.weekday_text[0] + '</li> <li>' + place.opening_hours.weekday_text[1]+ '</li> <li>' + place.opening_hours.weekday_text[2] + '</li> <li>' + place.opening_hours.weekday_text[3] + '</li> </ul> </div> </li> </ul>';
-           
-          targetPlaceDiv.innerHTML = placeInfoHTML;
-          //document.getElementById(place.place_id).querySelector('p').style.display = "none";
-              
+        searchCallback: function(results,status) {
+        	var i = 1;
+        	var map = mapObj;
+        	var icons = {
+                donuts : {
+                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                    scaledSize: new google.maps.Size(30,30)
+                },
+                beers : {
+                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                    scaledSize: new google.maps.Size(30,30)
+                },
+                burgers: {
+                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+                    scaledSize: new google.maps.Size(30,30)
+                },
+                coffee: {
+                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
+                    scaledSize: new google.maps.Size(30,30)
+                },
+                books : {
+                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
+                    scaledSize: new google.maps.Size(30,30)
+                }
+            };
 
-              //document.getElementById(place).children[1].style.display = "initial";
-          
-
-        },
-
-        //map search functions
-  //       startSearch: function() {
-
-  //           if (Object.getOwnPropertyNames(map).length === 0) {
-  //             console.log('new map object- creating new map');
-  //               returnObj.createMap(seattle);
-  //           } else {
-  //             console.log('existing map object');
-  //               map.setCenter(map.getCenter().toJSON());
-  //               map.setZoom(15);
-  //               //returnObj.getMapObj();
-  //           };
-  //           returnObj.callService();
-  //       },
-
-  //       callService: function() {
-  //           var service = new google.maps.places.PlacesService(map);
-  //           searchParam = JSON.parse(document.getElementById('visible-option').children[0].dataset.searchparams);
-            
-  //           var request = {
-  //                   location: map.getCenter() || seattle,
-  //                   rankBy: google.maps.places.RankBy.DISTANCE,
-  //                   type: searchParam.type,
-  //                   name: searchParam.name  
-  //               };           
-
-  //           service.nearbySearch(request, this.searchCallback);
-  //       },
-
-  //       searchCallback: function(results, status) {
-  //           var i =1;
-            
-  //           var icons = {
-  //               donuts : {
-  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-  //                   scaledSize: new google.maps.Size(30,30)
-  //               },
-  //               beers : {
-  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-  //                   scaledSize: new google.maps.Size(30,30)
-  //               },
-  //               burgers: {
-  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-  //                   scaledSize: new google.maps.Size(30,30)
-  //               },
-  //               coffee: {
-  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/cafe-71.png",
-  //                   scaledSize: new google.maps.Size(30,30)
-  //               },
-  //               books : {
-  //                   url: "https://maps.gstatic.com/mapfiles/place_api/icons/shopping-71.png",
-  //                   scaledSize: new google.maps.Size(30,30)
-  //               },
-  //           };
-            
-  //           var ul = document.createElement('ul');
-  //           resultsObj = results;                                                                                                                                                                                                                                                                                            
-  //           //clear earlier markers if any, add new markers, add list results to dom
-  //           if (status == google.maps.places.PlacesServiceStatus.OK) {
-  //               markers.forEach(function(marker){
-  //                   marker.setMap(null);
-  //               })
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+            	resultsArr = results;
+            	markersArr.forEach(function(marker){
+                     marker.setMap(null);
+                })
+                markersArr = [];
                 
-  //               resultsList.innerHTML = "";                
-  //               markers = [];
-  //               //console.log(results);
-  //               results.forEach(function(item){
-  //                   //improves relevance of search results
-  //                   //create markers and add listeners from each item in results array
-  //                   var marker = new google.maps.Marker({
-  //                           id: item.place_id,
-  //                           position: item.geometry.location,
-  //                           icon: icons[searchParam.name],
-  //                           map: map,
-  //                           title: item.name + "\n" + item.vicinity,
-  //                           label: '' + i + '',
-  //                           vicinity: item.vicinity
-  //                   });
-  //                   markers.push(marker);
-                        
-  //                   var li = document.createElement('li');
-  //                   li.innerHTML = "<h2>" + i + ". " + item.name + "</h2><p>" + item.vicinity + "</p><div class='expand'><p>More</p></div><div class='placeInfo'></div>";
-  //                   li.id = item.place_id;
-  //                   li.location = item.geometry.location;
-                    
-  //                   google.maps.event.addDomListener(li,'click',returnObj.centerOnResult);
-  //                   ul.appendChild(li);
+                returnObj.removeExistingDirectionDisplay();
 
-  //                   marker.addListener('mouseover', returnObj.showMarkerInfo);
-  //                   marker.addListener('mouseout', returnObj.removeMarkerInfo);
-  //                   i++;
-  //               });
+            	results.forEach(function(item) {
+            		
+					//create markers and add listeners from each item in results array
+                    var marker = new google.maps.Marker({
+                            id: item.place_id,
+                            position: item.geometry.location,
+                            icon: icons[searchParam.name],
+                            map: map,
+                            title: item.name + "\n" + item.vicinity,
+                            label: '' + i + '',
+                            vicinity: item.vicinity
+                    });
+                    marker.addListener('click',returnObj.highlightMarkerResult);
+                    markersArr.push(marker);
+                    i++;
+            	})
+            } else {
+            	resultsArr = google.maps.places.PlacesServiceStatus;
+            };
 
-  //               resultsList.scrollTop = 0;
-  //               resultsList.style.visibility = "visible";
-  //               if (windowIs760) {
-  //                   resultsList.style.height = "90vh";
-  //               } else {
-  //                   resultsList.style.height = "400px";
-  //               };
-  //               resultsList.appendChild(ul);
-  //               placeInfoPopulated = false;
-  //               returnObj.assignPlaceDetailsListeners();
-                         
-  //           } else {
-  //               console.log('connection error');
-  //           };
-  //       },
+    		mapResults = resultsArr;
+    		//prefer to call on dom.js (where function is declared) for clarity but need to call here because async maps callback 
+            _dom.createResultsList()
+                       
+        },
 
-  //        assignSearchListener: function() {
-  //            searchBtn.onclick = returnObj.startSearch;
-  //        }
-  // }
-  
+        //#####places search functions#####
+
+		searchPlaces: function(id) {
+			var map = mapObj;
+			var request = {
+				placeId: id
+			};
+			var service = new google.maps.places.PlacesService(map);
+			returnObj.removeExistingDirectionDisplay();
+			service.getDetails(request, returnObj.placesCallback);
+		},
+
+		placesCallback: function(place,status) {
+			if (status == google.maps.places.PlacesServiceStatus.OK) {
+				placeResults = place;
+				placesObj = place;
+				_dom.expandPlacesDiv(placeResults.place_id)
+			} else {
+				placesObj = status;
+			}
+		},
+
+		removeExistingDirectionDisplay: function() {
+			if (directionsDisplay) {
+				directionsDisplay.setMap(null);
+			};
+		},
+
+		//#####directions search functions#####
+
+		startDirections: function(location) {
+			var map = mapObj;
+			var directionsService;
+			var request = {
+				origin: userLoc || seattle,
+				destination: location,
+				travelMode: 'DRIVING'
+			};
+			returnObj.removeExistingDirectionDisplay();
+			directionsDisplay = new google.maps.DirectionsRenderer();
+			directionsService = new google.maps.DirectionsService();
+			directionsDisplay.setMap(map);
+			directionsService.route(request, returnObj.directionsCallback)
+		},
+
+		directionsCallback: function(result, status) {
+			if (status == "OK") {
+				directionsDisplay.setDirections(result);
+				directionsObj = result;
+				markersArr.forEach(function(marker){
+					marker.setMap(null);
+			});
 
 
-     //API Key - AIzaSyD-ysCChphJtFjAWNY0ge7kwE7YGlPFEXw
-      //!!remember to restrict api key in api console access to specific domain before putting in production
-  return returnObj;    
+			} else {
+				console.log(status);
+			};
+		},
+
+		//#####getters#####
+
+		getMapCtr: function() {
+			//if new map ctrs on seattle otherwise current center
+			var map = mapObj;
+			var ctr = Object.getOwnPropertyNames(map).length === 0? userLoc: map.getCenter().toJSON();
+			return ctr;
+		},
+
+		getMapObj: function() {
+			return mapObj;
+		},
+
+		getResultsArr: function() {
+			return resultsArr;
+		},
+
+		getMarkersArr: function() {
+			return markersArr;
+		},
+
+		getPlacesObj: function() {
+			return placesObj;
+		},
+
+		getDirectionsObj: function() {
+			return directionsObj;
+		},
+
+		getDirectionsDisplay: function() {
+			return directionsDisplay;
+		},
+
+		//doesn't really 'set' it, just takes location and passes it to a variable
+		setUserLoc: function(position) {
+			userLoc = { 
+			 	lat: _getUserLocation.getloc().coords.latitude,
+			 	lng: _getUserLocation.getloc().coords.longitude
+				 };
+			return userLoc;
+		}
+
+
+	};
+	return returnObj;
 }
-
-
 
