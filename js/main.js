@@ -12,7 +12,7 @@ var _getUserLocation = getUserLocation();
 
 navigator.geolocation.getCurrentPosition(function(position){
 	_getUserLocation.setLocation(position);
-	});
+	});  //add error handler; not currently working in safari/mobile
 
 
 var mapResults = [];
