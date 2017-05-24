@@ -1,5 +1,5 @@
 #placeInfo li{
-        font-size: 20px;
+    font-size: 20px;
     }
 
 .expand p {
@@ -7,7 +7,7 @@
 }
 
 .expand ul,
-#placeInfo ul {
+.placeInfo ul {
 	padding-left: 0;
 }
 
