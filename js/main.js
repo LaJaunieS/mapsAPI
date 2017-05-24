@@ -1,7 +1,6 @@
 //to do- bring in jquery for basic uis like expand list?
-//use google or js geolocation to base search on users location
-//link to directions based on user location
-//change input ui to buttons
+//fix geolocation feature to only search user location on initial search- after that search from current map center as before
+//something isn't working with initial input option
 
 'use strict'
 var _gmaps = initializeMap();

@@ -78,7 +78,7 @@ function initializeMap() {
 			mapObj = map;
 			currentCtr = returnObj.getMapCtr();
 			returnObj.assignMapListeners();
-		
+			
 		},
 	  
 		assignMapListeners: function() {
@@ -111,7 +111,7 @@ function initializeMap() {
 		getMapCtr: function() {
 			//if new map ctrs on seattle otherwise current center
 			var map = mapObj;
-			var ctr = Object.getOwnPropertyNames(map).length === 0? seattle: map.getCenter();
+			var ctr = Object.getOwnPropertyNames(map).length === 0? userLoc: map.getCenter().toJSON();
 			return ctr;
 		},
 
@@ -133,7 +133,7 @@ function initializeMap() {
 		},
 
 		getLocationBeingUsed: function() {
-			return userLoc || seattle;
+			return userLoc || returnObj.getMapCtr();
 		},
 
 
@@ -150,7 +150,9 @@ function initializeMap() {
             } else {
               	console.log('existing map object');
               	//recenter map on new map bounds center
-              	currentCtr = userLoc || returnObj.getMapCtr();
+              	//clear initial loc value based on user loc
+              	userLoc = null;
+              	currentCtr = returnObj.getMapCtr();
               	returnObj.setMapCenter();
             };
             returnObj.callService();
