@@ -1,6 +1,6 @@
-//to do- bring in jquery for basic uis like expand list?
-//fix geolocation feature to only search user location on initial search- after that search from current map center as before
+
 //something isn't working with initial input option
+//add callout marker showing location; add marker showing item centered upon
 
 'use strict'
 var _gmaps = initializeMap(),
