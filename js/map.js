@@ -155,8 +155,8 @@ function initializeMap() {
         	var map = mapObj;
         	var icons = {
                 donuts : {
-                    url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
-                    scaledSize: new google.maps.Size(30,30)
+                    url: "img/donut.png",
+                    scaledSize: new google.maps.Size(40,40)
                 },
                 beers : {
                     url: "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
