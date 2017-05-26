@@ -1,22 +1,24 @@
+@import '_variables';
+
 @keyframes selection {
   50% {
     background-color: #666;
-    color: #f7f7f7; 
+    color: $textColorLight; 
     }
   100% {
     background-color: #333;
-    color: #f7f7f7; 
+    color: $textColorLight; 
     } 
 }
 
 @keyframes flash {
   50% {
     background-color: #d6d6d6;
-    color: #f7f7f7; 
+    color: $textColorLight; 
     }
   100% {
     background-color: #f7f7f7;
-    color: #666; 
+    color: $textColorDark; 
     } 
 }
 
@@ -42,8 +44,8 @@ body {
 }
 
 #container {
-    color: #666;
-    font-family: 'Roboto', sans-serif;
+    color: $textColorDark;
+    font-family: $fontStack;
     display: flex;
     flex-flow: column; 
     height: 100vh;
@@ -53,21 +55,13 @@ body {
     }
 }
 
-/*not being used?*/
-#tag {
-    display: inline-block;
-    margin: 0;
-    width: 21%;
-}
-
-
 #searchContainer {
     width: 100%;
 
 	#searchBar {
 	    display: flex;
 	    flex-flow: row;
-	    font-size: 25px;
+	    font-size: $textSizeL;
 	    margin: 0 auto;
 	    max-width: 900px;
 	    width: 100%;
@@ -84,15 +78,15 @@ body {
 		li {
 		    background-color: #fff;
 		    box-sizing: border-box;
-		    font-size: 14px;
-		    border: 1px solid #d6d6d6;
+		    font-size: $textSizeXS;
+		    border: 1px solid $borderColor;
 		    height: 100%;
 		    padding-top: 19px;
 		    padding-left: 5px;
 		    transition: color .2s ease-in-out, background-color .2s ease-in-out;
 		    text-decoration: underline;
 			@media screen and (min-width: 760px) {
-			    font-size: 25px;
+			    font-size: $textSizeL;
 			    padding-top: 11px;
 			    padding-left: 15px;
 			}
@@ -107,8 +101,8 @@ body {
 	    		top: 55px;
 	    		z-index: 100;
 				li:hover {
-		    		background-color: #666;
-		    		color: #f7f7f7;
+		    		background-color: $textColorDark;
+		    		color: $textColorLight;
 				}
 			}
 			#visible-option {
@@ -120,10 +114,10 @@ body {
 			}
    		}
    		#searchBtn {
-		    border: 1px solid #d6d6d6; /*change color later when palette developed*/
-		    background-color: #f7f7f7; 
+		    border: 1px solid $borderColor; 
+		    background-color: $textColorLight; 
 		    box-shadow: none;
-		    color: #666;
+		    color: $textColorDark;
 		    cursor: pointer;
 		    padding: 0;
 		    margin: 0;
@@ -137,7 +131,7 @@ body {
 #mapContainer {
     display: none;
     width: 100%;
-    border: 1px solid #d6d6d6;
+    border: 1px solid $borderColor;
     transition: height .4s ease-in-out;
 	#map {
 	    height: 30vh;
@@ -157,7 +151,7 @@ body {
     border-radius: 2px;
     color: rgb(86,86,86);
     cursor: pointer;
-    font-family: 'Roboto', sans-serif;
+    font-family: $fontStack;
     font-size: 11px;
     font-weight: 400;
     padding: 8px;
@@ -167,20 +161,21 @@ body {
 
 #resultsList {
     visibility: hidden;
-    border: 1px solid #d6d6d6;
+    border: 1px solid $borderColor;
     width: 100%;
     overflow-y: scroll;
 
 	p {
-        font-size: 20px;
+        font-size: $textSizeM;
     }
 	@media screen and (min-width: 760px) {
     	width: 33%;
     }
 	> ul > li {
-    border-bottom: 1px solid #d6d6d6;
+    border-bottom: 1px solid $borderColor;
     cursor: pointer;
 	}
 }
 
 
+@import '_expand';

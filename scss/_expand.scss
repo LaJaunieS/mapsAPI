@@ -1,9 +1,13 @@
+@import '_variables';
+
 @mixin setRegAndHoverColor($color) {
 	background-color : $color;
 	&:hover {
 		background-color: lighten($color, 20%);
 	}
 }
+
+/*expand/places elements styling*/
 
 .expand p {
 		text-decoration: underline;
@@ -15,15 +19,15 @@
 	}
 	.btn-contact {
 		border: none;
-		color: #f7f7f7;
+		color: $textColorLight;
 		cursor: pointer;
 		height: 35px;
 		padding: 0;
 		margin: 16px 0;
 		width: 100px;
 		transition: background-color 0.2s ease-in-out;
-		/*to do -add sass lighten rules on color for hovers*/
 	}
+
 	.btn-directions {
 		@include setRegAndHoverColor(rgba(128,128,128,1.0));
 	}
@@ -37,11 +41,11 @@
 	}
 	.open {
 		color: #3b8ede;
-		font-size: 20px;
+		font-size: $textSizeM;
 	}
 
 	.closed {
-		color: red; /*modify later when applying color palette*/
+		color: #ff2d32; 
 	}
 
 	#open-or-closed {
@@ -49,7 +53,7 @@
 	 }
 
 	#open-hours ul li {
-	 	font-size: 16px;
+	 	font-size: $textSizeS;
 	}
 }
 
