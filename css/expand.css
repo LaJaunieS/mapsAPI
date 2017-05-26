@@ -1,61 +1,39 @@
-#placeInfo li{
-    font-size: 20px;
-    }
-
 .expand p {
-	text-decoration: underline;
-}
+  text-decoration: underline; }
 
-.expand ul,
 .placeInfo ul {
-	padding-left: 0;
-}
+  padding-left: 0; }
+.placeInfo .btn-contact {
+  border: none;
+  color: #f7f7f7;
+  cursor: pointer;
+  height: 35px;
+  padding: 0;
+  margin: 16px 0;
+  width: 100px;
+  transition: background-color 0.2s ease-in-out;
+  /*to do -add sass lighten rules on color for hovers*/ }
+.placeInfo .btn-directions {
+  background-color: gray; }
+  .placeInfo .btn-directions:hover {
+    background-color: #b3b3b3; }
+.placeInfo .btn-website {
+  background-color: #23869b; }
+  .placeInfo .btn-website:hover {
+    background-color: #4dbfd7; }
+.placeInfo .btn-phone {
+  background-color: #0e154b; }
+  .placeInfo .btn-phone:hover {
+    background-color: #1e2da1; }
+.placeInfo .open {
+  color: #3b8ede;
+  font-size: 20px; }
+.placeInfo .closed {
+  color: red;
+  /*modify later when applying color palette*/ }
+.placeInfo #open-or-closed {
+  margin: 0 0 16px; }
+.placeInfo #open-hours ul li {
+  font-size: 16px; }
 
-#buttons {
-
-}
-
-.btn-contact {
-	border: none;
-	color: #f7f7f7;
-	cursor: pointer;
-	height: 35px;
-	padding: 0;
-	margin: 16px 0;
-	width: 100px;
-	/*to do -add sass lighten rules on color for hovers*/
-	}
-
-
-.btn-directions {
-	background-color: gray;/*modify later when working on palette*/
-}
-
-.btn-website {
-	background-color: rgba(35,134,155,1.0);
-}
-
-.btn-phone {
-	background-color: rgba(14,21,75,1.0);
-}
-
-.open {
-	color: #3b8ede;
-}
-
-.closed {
-	color: red; /*modify later when applying color palette*/
-}
-
-#open-or-closed {
-   margin: 0 0 16px;
- }
-
-#open-hours ul li {
- 	font-size: 16px;
-}
-
-#open-hours img {
-	height: 14px;
-	width: 20px;
-}
+/*# sourceMappingURL=expand.css.map */

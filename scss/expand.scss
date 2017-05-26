@@ -1,0 +1,58 @@
+@mixin setRegAndHoverColor($color) {
+	background-color : $color;
+	&:hover {
+		background-color: lighten($color, 20%);
+	}
+}
+
+.expand p {
+		text-decoration: underline;
+	}
+
+.placeInfo {
+	ul {
+		padding-left: 0;
+	}
+	.btn-contact {
+		border: none;
+		color: #f7f7f7;
+		cursor: pointer;
+		height: 35px;
+		padding: 0;
+		margin: 16px 0;
+		width: 100px;
+		transition: background-color 0.2s ease-in-out;
+		/*to do -add sass lighten rules on color for hovers*/
+	}
+	.btn-directions {
+		@include setRegAndHoverColor(rgba(128,128,128,1.0));
+	}
+
+	.btn-website {
+		@include setRegAndHoverColor(#23869b);
+	}
+
+	.btn-phone {
+		@include setRegAndHoverColor(#0e154b);
+	}
+	.open {
+		color: #3b8ede;
+		font-size: 20px;
+	}
+
+	.closed {
+		color: red; /*modify later when applying color palette*/
+	}
+
+	#open-or-closed {
+	   margin: 0 0 16px;
+	 }
+
+	#open-hours ul li {
+	 	font-size: 16px;
+	}
+}
+
+
+
+
