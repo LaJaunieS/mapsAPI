@@ -3,8 +3,20 @@ function dom() {
 		
 		returnObj = {
 
+		repositionSearchBar: function() {
+			var searchBar = document.getElementById('searchBar');
+			if (windowIs760) {
+				searchBar.style.margin = "10px 0 0";
+			} else {
+				searchBar.style.margin = "10px auto 0";
+			};
+		},
+
 		createResultsList: function() {
 			var i = 1;
+
+			returnObj.repositionSearchBar();
+
 			resultsElements.resultsUl.innerHTML = "";
 			resultsElements.resultsLiArr = [];
 			resultsElements.resultsList.style.visibility = "visible";
