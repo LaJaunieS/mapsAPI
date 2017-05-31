@@ -26,7 +26,9 @@
 		visibleOption.children[0].style.animation += "selection .15s linear 2";
 		nonVisibleOptions.style.visibility = "hidden";
 		visible = false;
-		_gmaps.startSearch()
+		if (visibleOption.children[0].innerHTML !== "Show me...") {
+			_gmaps.startSearch()
+		};
 	}
 
 	visibleOption.addEventListener('click', showOptions);

@@ -1,6 +1,6 @@
 
-//something isn't working with initial input option
-//add callout marker showing location; add marker showing item centered upon
+
+//to do-add callout marker showing location; add marker showing item centered upon
 
 'use strict'
 var _gmaps = initializeMap(),
@@ -14,7 +14,11 @@ navigator.geolocation.getCurrentPosition(function(position){
 	});  //add error handler; 
 
 			
-searchElements.searchBtn.onclick = _gmaps.startSearch;
+searchElements.searchBtn.addEventListener('click', function() {
+	if (document.getElementById('visible-option').children[0].innerHTML !== "Show me...") {
+		_gmaps.startSearch();	
+	};
+})
 
 
 
