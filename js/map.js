@@ -120,6 +120,7 @@ function initializeMap() {
 		startSearch: function(fn) {
 			var map = mapObj;
 			var ctr;
+			_dom.repositionSearchBar();
 			if (Object.getOwnPropertyNames(map).length === 0) {
               	console.log('new map object- creating new map');
                 returnObj.createMap(userLoc || seattle);

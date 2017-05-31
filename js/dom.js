@@ -15,8 +15,6 @@ function dom() {
 		createResultsList: function() {
 			var i = 1;
 
-			returnObj.repositionSearchBar();
-
 			resultsElements.resultsUl.innerHTML = "";
 			resultsElements.resultsLiArr = [];
 			resultsElements.resultsList.style.visibility = "visible";

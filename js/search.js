@@ -10,7 +10,7 @@
 	function showOptions() {
 		visibleOption.children[0].style.animation = "";
 		if (!visible) {
-			visibleOption.children[0].innerHTML = "Show me Donuts!"
+			visibleOption.children[0].innerHTML = "Show me..."
 			nonVisibleOptions.style.visibility = "visible";
 			visible = true;
 		} else {
@@ -34,6 +34,7 @@
 	for (var i = 0; i < nonVisibleLiItems.length; i++) {
 		var element = nonVisibleLiItems[i];
 		element.onclick = selectOption;	
+		console.log(element);
 	};
 
 }()
