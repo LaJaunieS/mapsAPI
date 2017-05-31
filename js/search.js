@@ -34,7 +34,6 @@
 	for (var i = 0; i < nonVisibleLiItems.length; i++) {
 		var element = nonVisibleLiItems[i];
 		element.onclick = selectOption;	
-		console.log(element);
 	};
 
 }()
