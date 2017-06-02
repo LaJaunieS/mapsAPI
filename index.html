@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+"http://www.w3.org/TR/html4/strict.dtd">
+<html>  
+    <head>
+          
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Show Me Donuts!</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link href="css/main.css" rel="stylesheet">
+        
+	</head>
+	<body>
+        <div id="container">
+            
+            <div id="headerContainer">
+                <!-- TBD -->
+            </div>
+            
+            <div id="searchContainer">
+                <div id="searchBar">
+                    <div id="searchInput">
+                        <ul id="visible-option">
+                            <li>Show me...</li>
+                        </ul>
+                        <ul id="nonvisible-options">
+                            <li tabindex="0" data-searchParams='{ "name": "donuts", "type": "bakery" }'>Show me Donuts!</li>
+                            <li tabindex="0" data-searchParams='{ "name": "beer", "type": "bar" }'>Show me Beer!</li>
+                            <li tabindex="0" data-searchParams='{ "name": "burgers", "type": "restaurant" }'>Show me Burgers!</li>
+                            <li tabindex="0" data-searchParams='{ "name": "coffee", "type": "cafe" }'>Show me Coffee!</li>
+                            <li tabindex="0" data-searchParams='{ "name": "books", "type": "book_store" }'>Show me Books!</li>
+                        </ul>
+                        
+                    </div>
+                        <button id="searchBtn" name="searchBtn">Search</button>
+                </div>
+           </div>
+
+            <div id="mapContainer">
+                <div id="map"></div>
+            </div>
+            
+            <div id="resultsList"></div>
+           
+
+            
+        </div>
+            
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD-ysCChphJtFjAWNY0ge7kwE7YGlPFEXw&libraries=places"></script>
+        <script src="js/app.js"></script>
+        
+	</body>
+</html>
