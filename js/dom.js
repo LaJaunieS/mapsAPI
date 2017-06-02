@@ -73,7 +73,7 @@ function dom() {
 		},
 
 		setOpenClosed: function(openOrClosed) {
-			if (openOrClosed) {
+			if (openOrClosed.open_now) {
 				//el.className = "open";
 				return 'Open Now'
 			} else {
@@ -84,9 +84,9 @@ function dom() {
 
 		expandPlacesDiv: function(targetEl) {
 			var target = document.getElementById(targetEl);
-			var addr = placeResults.formatted_address;
-			var openOrClosed = placeResults.opening_hours.open_now;
-			var testIfOpen = returnObj.setOpenClosed(openOrClosed);
+			var addr = placeResults.formatted_address || "none";
+			var openOrClosed = placeResults.opening_hours || "none";
+			var testIfOpen = returnObj.setOpenClosed(openOrClosed) || "none";
 			var openClosedEl;
 			var directionsBtn;
 			
@@ -95,9 +95,14 @@ function dom() {
 			
 			placesElements.openHoursLi.class = "open-hours";
 			placesElements.openHoursLi.innerHTML = '<div> <ul>';
-			placeResults.opening_hours.weekday_text.forEach(function(item){
-				placesElements.openHoursLi.innerHTML += '<li>' + item + '</li>';
-			})
+			
+			//some results didnt have opening hours - note and handle this error condition
+			if(openOrClosed.open_now !== undefined) {
+				placeResults.opening_hours.weekday_text.forEach(function(item){
+					placesElements.openHoursLi.innerHTML += '<li>' + item + '</li>';
+				})
+			};
+
 			placesElements.openHoursLi.innerHTML += "</ul></div></li>";
 			
 			placesElements.placesUl.appendChild(placesElements.openHoursLi);
@@ -107,7 +112,7 @@ function dom() {
 			placesElements.placeInfo.appendChild(placesElements.placesUl);
 			
 			openClosedEl = document.getElementById('open-or-closed');
-			if (openOrClosed) {
+			if (openOrClosed.open_now) {
 				openClosedEl.className = "open";
 			} else {
 				openClosedEl.className = "closed";

@@ -2,6 +2,15 @@
 
 //to do-add callout marker showing location; add marker showing item centered upon
 
+//script sequence:
+//elements.js
+//location.js
+//mapStyles.js
+//map.js
+//search.js
+//dom.js
+//main.js
+
 'use strict'
 var _gmaps = initializeMap(),
 	_dom = dom(),
