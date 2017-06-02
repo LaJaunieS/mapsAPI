@@ -142,7 +142,8 @@ body {
 	    }
 	}
 	@media screen and (min-width: 760px) {
-	    width: 66%;
+		flex: 1 0 auto;
+	    width: 55%;
 	}
 }
 
@@ -161,16 +162,20 @@ body {
 }
 
 #resultsList {
-    visibility: hidden;
     border: 1px solid $borderColor;
+    flex: 5 0 auto;
     width: 100%;
     overflow-y: scroll;
+    visibility: hidden;
 
 	p {
         font-size: $textSizeM;
     }
 	@media screen and (min-width: 760px) {
     	width: 33%;
+    }
+    @media screen and (min-width: 1060px) {
+    	flex: initial;
     }
 	> ul > li {
     border-bottom: 1px solid $borderColor;
